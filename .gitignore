@@ -1,0 +1,10 @@
+plugins/*
+res/*
+spec/*
+spec.html
+cordova.js
+cordova_plugins.js
+PushNotification.js
+config.xml
+.DS_Store
+

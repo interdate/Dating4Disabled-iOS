@@ -1,0 +1,1057 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-type" name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width">
+    <title>Dating4Disabled</title>
+	
+	
+    
+ 	<!-- <link rel="stylesheet" href="http://code.jquery.com/mobile/latest/jquery.mobile.min.css" />  -->
+ 	<link rel="stylesheet" href="js/jquery.mobile-1.3.1/jquery.mobile-1.3.1.min.css" />
+ 	<link rel="stylesheet" href="js/jquery.mobile-1.3.1/d4d-theme.min.css" />
+ 	
+	<link rel="stylesheet" href="css/index.css" />    
+    <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>	
+	<!-- <script src="http://code.jquery.com/mobile/latest/jquery.mobile.min.js"></script>  -->
+	
+	
+	
+	
+	
+	    
+	
+	<!-- CDN Respositories: For production, replace lines above with these uncommented minified versions -->
+	<!-- 
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.css" />
+	<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>
+	 -->   
+	
+	  
+	 
+	
+	
+	<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+	
+	<script src="PushNotification.js"></script>
+	<script src="js/fastclick.js"></script>
+	<script src="js/index.js"></script>
+	<script src="js/iap.js"></script>
+	<script src="js/jquery.mobile-1.3.1/jquery.mobile-1.3.1.min.js"></script>
+
+	
+	
+	<!-- Add fancyBox -->
+	<link rel="stylesheet" href="js/fancybox/source/jquery.fancybox.css?v=2.1.3" type="text/css" media="screen" />
+	<script type="text/javascript" src="js/fancybox/source2/jquery.fancybox.pack.js?v=2.1.3"></script>
+	
+	
+</head>
+  
+<body onload="onBodyLoad();">
+	<input type="hidden" id="back_page" value="main_page" />
+	<div data-role="page" class="page" id="mainContainer">
+		<!--Start Header-->
+			
+		<div id="header">
+		
+			<div class="new_mes" onclick="app.getMessenger();"><div class="new_mes_count2"></div></div>
+			
+			<!--  
+			<div class="new_mes" onclick="app.getMessenger();">Messages<div class="new_mes_count2"></div></div>									
+			<div id="top_left_buttons">				
+				<div id="sign_up" onclick="app.register();"></div>
+				<div id="contact" onclick="app.contact();"></div>
+				<div id="back" onclick="app.back();"></div>				
+			</div>
+				
+			<div id="top_right_buttons">			
+				<a href="#" data-role="none" data-transition="slide" onclick="app.chooseMainPage();"><div id="logo"></div></a>
+			</div>
+			-->
+			
+			<div id="header_wrap">	
+				<div id="back" onclick="app.back();"></div>
+				<div id="logo" onclick="app.chooseMainPage();"></div>
+				<div id="logout" onclick="app.logout();"></div>
+				<div id="sign_up"><input type="button" data-theme="e" value="Sign Up" onclick="app.register();" /></div>				  
+			</div>
+		</div>
+			
+		<!--Stop Header-->
+		
+		<div style="width:100%; height:70px;"></div>
+	
+		<!--Start Login Page -->
+		<div id="login_page" class="appPage">
+			
+			<div data-role="content">
+				<div class="content_wrap"> 			
+					<form method="post" id="authForm" name="authForm" data-role="none">
+						<div id="user_txt" class="mar_top_8">E-mail or Username</div><div id="user_input"><input type="text" name="email" class="email" value="" data-role="none" maxlength="50" /></div>
+						<div class="clear"></div>
+						<div id="pass_txt" class="lineHeight_50">Password</div><div id="pass_input"><input type="password" name="password" class="password" value="" maxlength="50" data-role="none" /></div>
+						<div class="clear"></div>
+						<!-- <label><input type="checkbox" name="remember_me" value="remember_me"  /> <span>remember me</span> </label>  -->
+						<!--<div id="fog_pass"><a href="#" rel="external" data-ajax="false">I've forgot my password</a></div>-->
+						<!--<div id="login" onclick="app.sendAuthData();"></div>-->
+						<div class="right"><input type="button" value="Login" onclick="app.sendAuthData();" data-theme="e"></div>
+															
+					</form>								
+				</div>				
+			</div>		
+			
+			<div id="orange_line"></div>		
+			
+			<div data-role="content" data-scroll="false">
+				<div class="content_wrap">				
+					<div class="user_data_preview" id="udp_0">						
+						<div class="user_photo_wrap">
+							<img src="#" alt="" class="user_photo" />						
+						</div> 
+						<a href="#"><span></span></a>
+						<div class="address"></div>
+						<div class="on">ON</div>					
+					</div>
+					<div class="user_data_preview" id="udp_1">						
+						<div class="user_photo_wrap">
+							<img src="#" alt="" class="user_photo" />						
+						</div> 
+						<a href="#"><span></span></a>
+						<div class="address"></div>
+						<div class="on">ON</div>					
+					</div>
+				</div>
+			</div>			
+		</div>
+		<!--End Login Page -->
+		
+		<!--Start Main Page -->
+		<div id="main_page"  class="appPage">
+			<div data-role="content" data-scroll="false">
+				<div class="content_wrap">
+					<a href="#" onclick="app.getOnlineNow();"><div id="friends_online"></div></a>
+					<a href="#" onclick="app.getSearchForm();"><div id="search_friends"></div></a>
+					<a href="#" onclick="app.getMyProfileData();"><div id="profile"></div></a>   
+					<a href="#" onclick="app.getMessenger();" class="no_dec">
+						<div id="mail_box"><div id="new_mes_count"></div></div>
+					</a>				
+					<a href="#" id="bannerLink"><div id="why_subscr"><img src="http://m.dating4disabled.com/images/main_banner.png" /></div></a>
+					
+				</div>					
+			</div>		
+		</div>
+		<!--End Main Page -->
+		
+		<!--Start EULA Page -->
+		<div id="EULA_page"  class="appPage">
+			<div data-role="content" data-scroll="false">
+				<div class="content_wrap">
+					<h1>End User License Agreement</h1>
+					<div class="dots"></div>
+					
+					<div style="padding-bottom: 80px;">
+						Dating4disabled - End User license Agreement
+						This online personals service is a way for adults to meet each other (the "Service"). The Service is provided by Interdate ltd,.
+						This legal agreement is made between You and Us ("Agreement"). This Agreement applies to all of Our websites that are offering a Service including but not limited to dating4disabled.com.
+						Please read this Agreement carefully before registering for the Service. By registering for the Service, You become a dating4disabled.com  member (a "Member"), and You agree to be bound by the terms and conditions of this Agreement for as long as You continue to be a Member. IF YOU DO NOT AGREE WITH THE TERMS AND CONDITIONS OF THIS AGREEMENT, PLEASE DO NOT REGISTER FOR THE SERVICE. THE TERMS AND CONDITIONS OF THIS AGREEMENT ARE SUBJECT TO CHANGES MADE BY US, AT ANY TIME, EFFECTIVE UPON NOTICE TO YOU, WHICH NOTICE SHALL BE DEEMED TO HAVE BEEN PROVIDED UPON OUR POSTING OF THE CURRENT VERSION OF THIS AGREEEMENT ON THE WEBSITE.
+						In this Agreement the following words have the following meanings unless the context requires otherwise:
+						"Agreement" means the agreement between You and Us incorporating these terms and conditions for the provision of the Service, as amended from time to time in accordance with the terms and conditions set forth herein;
+						“We, Us, Our" means Interdate ltd; and
+						"You, Yourself, Your" means the person who registers for the Service, accepts the terms and conditions of this Agreement and whose application for membership of the Service is accepted by Us.
+						ELIGIBILITY: MINORS MAY NOT BECOME MEMBERS. By becoming a Member, You represent and warrant that You are at least 18 years old. By using the Website, You represent and warrant that You have the right, authority and capacity to enter into this Agreement and to abide by the terms and conditions of this Agreement. Your membership for the Service is for Your sole, personal use. You may not authorize others to use Your membership and You may not assign or otherwise transfer Your account to any other person or entity.
+						REGISTRATION AND SUBSCRIPTION:  You may register as a Member of the Service for free.
+						TERM AND TERMINATION: This Agreement will remain in full force and effect while You use the Service and/or are a Member. You may terminate your membership at any time, for any reason by following the instructions on the Member Services page of the Service, or upon receipt by Us of Your written or email notice of termination. Either You or We may terminate your membership by removing your profile, at any time, for any reason, with or without explanation, effective upon sending written or email notice to the other party. In the event that (a) You terminate your subscription or membership or (b) We determine, in our sole discretion, that You have violated this Agreement or our posted Privacy Policy and terminate Your membership or subscription, You shall not be entitled to nor shall We be liable to You for any refund of any unused portion of any subscription payments the We have received from You, and We may continue to bar Your use of the Service in the future. Even after Your membership is terminated, this Agreement will remain in effect.
+						PROPRIETARY RIGHTS: You represent and warrant to Us that the information posted in Your profile including Your photograph are posted by You and that You are the exclusive author of Your profile and the exclusive owner of Your photographs. You assign to Us, with full title guarantee, all copyright in Your profile and Your photographs posted, at any time, in connection with Your use of the Service. You waive absolutely any and all moral rights to be identified as author of Your profile and owner of Your photograph and any similar rights in any jurisdiction in the world. In addition, other Members may post copyrighted information, which has copyright protection, whether or not it is identified as copyrighted. Except for that information which is in the public domain or for which You have been given express written permission by the owner of such information, You will not copy, modify, publish, transmit, distribute, perform, display, or sell any such proprietary information. By posting information, photographs or content on any Service, You automatically grant, and You represent and warrant that You have the right to grant, to Us and other members, free of charge, an irrevocable, perpetual, non-exclusive, royalty-free, fully-paid, worldwide license to use, reuse, copy, copyright, perform, display, promote, publish, republish and distribute whether online or offline, with various publications, made through any media, for art, advertising, trade or any other purpose whatsoever, such information, content and photographs and to prepare derivative works of, or incorporate into other works, without restriction, in conjunction with Your name or a fictitious name, such information and content, and to grant and authorize sub-licenses of the foregoing.
+						YOUR USE OF THE SERVICE: As a Member, You agree that:
+						(1) You will use the Service in a manner consistent with any and all applicable laws and regulations. You will not include in Your profile any telephone numbers, street addresses, last names, URL's or email addresses, other than where You are specifically asked for such information in the Confidential Personal Information section of the Service. You will not engage in advertising to, or solicitation of, other members to buy or sell any products or services through the Service. You will not transmit any chain letters or junk email to other members. To protect Our members against such conduct, We currently impose a limit on the number of new contacts per day. You are solely responsible for Your interactions with other members. We reserve the right, but have no obligation, to monitor and/or mediate disputes between You and other members.
+						(2) You are solely responsible for the content or information You publish or display (hereinafter, "post") on the Service, or transmit to other members. You will not post on the Service, or transmit to other members or to Us or Our employees, any defamatory, inaccurate, abusive, obscene, profane, offensive, sexually oriented, threatening, harassing, racially offensive, or illegal material, or any material that infringes or violates another party's rights (including, but not limited to, intellectual property rights, and rights of privacy and publicity). You will not include in Your profile any offensive anatomical or sexual references, or offensive sexually suggestive or connotative language, and You will not post any photos containing nudity or personal information. We reserve the right, but We have no obligation, to reject any profile or photo that does not comply with the prohibitions set forth in this section and, to the extent that We determine, in Our sole discretion, to do so, You shall not be entitled to a refund of any unused subscription payments that We have received from You.
+						(3) Email communications sent from Us or through Us are designed to make your online personals experience enjoyable. By becoming a member, You specifically agree to accept and consent to receiving email communications initiated from Us or through Us including, without limitation: message notification emails, emails informing you about events and parties We organize, emails informing You of promotions We run and emails informing You of changes to the Service. Should You not wish to receive any of Our email communications, do not register with Us for the Service.
+						(4) You agree that We have no responsibility or liability for the deletion, corruption or failure to store any messages or other content maintained or transmitted by Our Service. You acknowledge that features, parameters or other services We provide may change at any time. You acknowledge that We reserve the right to sign out, terminate, delete or purge Your account from the Service if it is inactive. "Inactive" means that you have not signed in to the Service for a particular period of time, as determined by Us, in Our sole discretion (currently, we consider an account to be inactive after 12 months).
+						(5) Our customer service employees are here to make your online experience enjoyable by providing assistance and guidance to You. When in contact with Our customer , You undertake not to be abusive, obscene, profane, offensive, disrespectful of sexual oriention, threatening, harassing or racially offensive. Should any of Our employees feel, at any given point, threatened or offended by Your conduct, We reserve the right to immediately terminate Your membership and You shall not be entitled to the refund of any subscription payments We have received from You.
+						We are entitled to investigate and terminate Your membership if You have misused the Service, or behaved in a way which could be regarded as inappropriate, unlawful or illegal. The following is a partial, but not exhaustive, list of the types of actions that are illegal or prohibited under this Agreement:
+						(a) You will not impersonate any person or entity.
+						(b) You will not "stalk" or otherwise harass any person.
+						(c) You will not express or imply that any statements You make are endorsed by Us.
+						(d) You will not use any robot, spider, site search/retrieval application, or other manual or automatic device or process to retrieve, index, "data mine," or, in any way reproduce or circumvent the navigational structure or presentation of the Service or its contents.
+						(e) You will not post, distribute or reproduce, in any way, any copyrighted material, trademarks, or other proprietary information without obtaining the prior consent of the owner of such proprietary rights.
+						(f) You will not remove any copyright, trademark or other proprietary rights notices contained in the Service.
+						(g) You will not interfere with or disrupt any Service or any site, servers or networks connected to any Service or site.
+						(h) You will not post, email or otherwise transmit any material that contains software viruses or any other computer code, files or programs designed to interrupt, destroy or limit the functionality of any computer software or hardware or telecommunications equipment.
+						(i) You will not forge headers or otherwise manipulate identifiers in order to disguise the origin of any information transmitted through the Service.
+						(j) You will not "frame" or "mirror" any part of the Service.
+						(k) You will not use meta tags or code or other devices containing any reference to Us or the Service or the site connected to the Service in order to direct any person to any other web site for any purpose.
+						(l) You will not modify, adapt, sublicense, translate, sell, reverse engineer, decipher, decompile or otherwise disassemble any portion of the Service or any software used on or for the Service or cause or enable others to do so.
+						(m) You will not solicit personal identifying information from other users for commercial or unlawful purposes.
+						(n) You will not solicit money from other users.
+						(o) You will not promote information that is knowingly false, misleading or encourages unlawful activities or conduct that is threatening, obscene, defamatory or libelous.
+						Subscription information
+						Monthly membership to Dating4Disabled.com is $24.99 and is automatically renewed for $24.99 per month.
+						3 months subscription is 48.99$ ( 16.33$ per month) and is automatically renewed for 48.99$ after every 3 months.
+						6 months subscription 84.99 ( 14.16$ per month), and is automatically renewed for 84.99$ after every 6 months.
+						A yearly subscription 139.99$ ( 11.08$ per month), and is automatically renewed for 139.99$ every year.
+						INDEMNITY BY MEMBER: You will defend, indemnify, and hold Us and Our officers, directors, employees, agents and third parties harmless, for any losses, costs, liabilities and expenses (including reasonable attorneys' fees) relating to or arising out of Your use of the Service, including, but not limited to (i) Your breach of this Agreement; (ii) any allegation that any materials that You submit to Us or transmit to the Service infringe or otherwise violate the copyright, trademark, trade secret or other intellectual property or other rights of any third party; and (iii) Your activities in connection with the Service. This indemnity shall be applicable without regard to the negligence of any party, including any indemnified person.
+						ONLINE CONTENT: Opinions, advice, statements, offers, or other information or content made available through the Service, but not directly by Us, are those of their respective authors, and should not necessarily be relied upon. Such authors are solely responsible for such content. WE DO NOT GUARANTEE THE ACCURACY, COMPLETENESS, OR USEFULNESS OF ANY INFORMATION ON THE SERVICE AND WE NEITHER ADOPT NOR ENDORSE NOR ARE WE RESPONSIBLE FOR THE ACCURACY OR RELIABILITY OF ANY OPINION, ADVICE, OR STATEMENT MADE BY PARTIES OTHER THAN US. UNDER NO CIRCUMSTANCES ARE WE RESPONSIBLE FOR ANY LOSS OR DAMAGE RESULTING FROM ANYONE'S RELIANCE ON INFORMATION OR OTHER CONTENT POSTED ON THE SERVICE OR TRANSMITTED TO MEMBERS.
+						WE RESERVE THE RIGHT, BUT WE HAVE NO OBLIGATION, TO MONITOR THE MATERIALS POSTED IN THE PUBLIC AREAS OF THE SERVICE. WE SHALL HAVE THE RIGHT TO REMOVE ANY SUCH MATERIAL THAT, IN OUR SOLE DISCRETION, VIOLATES, OR IS ALLEGED TO VIOLATE, THE LAW OR THIS AGREEMENT. NOTWITHSTANDING THIS RIGHT, YOU REMAIN SOLELY RESPONSIBLE FOR THE CONTENT OF THE MATERIALS YOU POST IN THE PUBLIC AREAS OF THE SERVICE AND IN YOUR PRIVATE EMAIL MESSAGES. EMAILS SENT BETWEEN YOU AND OTHER MEMBERS THAT ARE NOT READILY ACCESSIBLE TO THE GENERAL PUBLIC WILL BE TREATED BY US AS PRIVATE TO THE EXTENT REQUIRED BY APPLICABLE LAW.
+						INTELLECTUAL PROPERTY. All intellectual property rights in and to the Service are and shall be owned by Us, absolutely. Those rights include, but are not limited to, database rights, copyright, design rights (whether registered or unregistered), trademarks (whether registered or unregistered) and other similar rights, wherever existing in the world, together with the right to apply for protection of the same. All other trademarks, logos, service marks, company or product names set forth in Service are the property of their respective owners.
+						PRIVACY: The personal information (including sensitive personal information) You provide to Us will be stored on computers. You consent to Our using this information to build up a profile of interests, preferences and browsing patterns and to allow You to participate in the Service. You also agree to read, review, comply with, uphold and maintain Our Privacy Policy and the terms and conditions thereof. If you are located outside of the United States, please note that the information that you provide is being sent to the United States. By becoming a member of the Service, you consent to your data being sent to the United States and to such other third parties and jurisdictions as may be involved in the provision and operation of the Service.
+						DISCLAIMERS: WE PROVIDE THE SERVICE ON AN "AS IS" BASIS AND GRANT NO WARRANTIES OF ANY KIND, EXPRESSED, IMPLIED, STATUTORY, IN ANY COMMUNICATION WITH US, OUR REPRESENTATIVES, OR OTHERWISE WITH RESPECT TO THE SERVICE. WE SPECIFICALLY DISCLAIM ANY IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT. FURTHER, WE DO NOT WARRANT THAT YOUR USE OF THE SERVICE WILL BE SECURE, UNINTERRUPTED, ALWAYS AVAILABLE OR ERROR-FREE OR THAT THE SERVICE WILL MEET YOUR REQUIREMENTS OR THAT ANY DEFECTS IN THE SERVICE WILL BE CORRECTED. WE DISCLAIM LIABILITY FOR, AND NO WARRANTY IS MADE WITH RESPECT TO, CONNECTIVITY AND AVAILABILITY.
+						Although each member must agree to Our terms and conditions, We cannot guarantee that each member is at least the required minimum age, nor do we accept responsibility or liability for any content, communication or other use or access of the Service by persons under the age of 18 in violation of this Agreement. Also, it is possible that other members or users (including unauthorized users, or "hackers") may post or transmit offensive or obscene materials on the Service and that You may be involuntarily exposed to such offensive and obscene materials. It also is remotely possible for others to obtain personal information about You due to Your use of the Service, and that the recipient may use such information to harass or injure You. We are not responsible for the use of any personal information that You disclose on the Service. Please carefully select the type of information that You post on the Service or release to others. WE DISCLAIM ALL LIABILITY, REGARDLESS OF THE FORM OF ACTION, FOR THE ACTS OR OMISSIONS OF OTHER MEMBERS OR USERS (INCLUDING UNAUTHORIZED USERS), WHETHER SUCH ACTS OR OMISSIONS OCCUR DURING THE USE OF THE SERVICE OR OTHERWISE.
+						LIMITATION OF LIABILITY: IN NO EVENT WILL WE BE LIABLE TO YOU FOR ANY INCIDENTAL, CONSEQUENTIAL, OR INDIRECT DAMAGES (INCLUDING, BUT NOT LIMITED TO, DAMAGES FOR LOSS OF DATA, LOSS OF PROGRAMS, COST OF PROCUREMENT OF SUBSTITUTE SERVICES OR SERVICE INTERRUPTIONS) ARISING OUT OF THE USE OF OR INABILITY TO USE THE SERVICE, EVEN IF WE OR OUR AGENTS OR REPRESENTATIVES KNOW OR HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES. NOTWITHSTANDING ANYTHING TO THE CONTRARY CONTAINED HEREIN, OUR LIABILITY TO YOU FOR ANY CAUSE WHATSOEVER, REGARDLESS OF THE FORM OF THE ACTION, WILL AT ALL TIMES BE LIMITED TO THE AMOUNT PAID, IF ANY, BY YOU TO US FOR THE SERVICE DURING THE TERM OF YOUR MEMBERSHIP. WE DO NOT CONDUCT BACKGROUND CHECKS OR OTHERWISE SCREEN THE MEMBERS REGISTERING TO THE SERVICE IN ANY WAY. AS A RESULT, WE WILL NOT BE LIABLE FOR ANY DAMAGES, DIRECT, INDIRECT, INCIDENTAL AND/OR CONSEQUENTIAL, ARISING OUT OF THE USE OF THIS SERVICE, INCLUDING, WITHOUT LIMITATION, DAMAGES ARISING OUT OF COMMUNICATING AND/OR MEETING WITH MEMBERS OF THE SERVICE OR VIA THE SERVICE. SUCH DAMAGES INCLUDE, WITHOUT LIMITATION, PHYSICAL DAMAGES, BODILY INJURY AND/OR EMOTIONAL DISTRESS AND DISCOMFORT.
+						COMPLAINTS: To resolve a complaint regarding the Service, You should first contact Our customer service department by clicking: contact us.
+						DISPUTE RESOLUTION: This Agreement is governed by the laws of Israel without regard to its conflict of law provisions. You agree to personal jurisdiction by and venue in the state and federal courts of Israel the city of Tel-Aviv. This Agreement shall not be governed by the United Nations Convention on Contracts for the International Sale of Goods, the application of which is hereby expressly excluded
+
+					</div>
+					
+					<div class="EULA_Buttons">
+						<!--
+						<input type="button" onclick="app.acceptEULA(true);" value="Accept" data-theme="e">
+						 -->
+
+
+						<div class="EULA_Button">
+							<input type="button" onclick="app.acceptEULA(true);" value="Accept" data-theme="e">
+						</div>
+						<!--
+						<div class="EULA_Button left">
+							<input type="button" onclick="app.acceptEULA(false);" value="Decline" data-theme="e">
+						</div>
+						 -->
+						
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		<!--End EULA Page -->
+		
+		
+		
+		
+		<!--Start Users List Page -->
+		<div id="users_list_page"  class="appPage">
+			<div data-role="content" data-scroll="false">
+				
+				<div class="sortButtonWrap">
+					<div class="sortButton" id="sortByDistance"><input type="button" onclick="app.sortByDistance();" value="Nearby" data-theme="e"></div>
+					<div class="sortButton" id="sortByEntranceTime"><input type="button" onclick="app.sortByEntranceTime();" value="Previous Results" data-theme="e"></div>
+				</div>
+				
+				<div class="marTop"></div>
+				
+				
+				<div class="content_wrap">
+					
+				</div>					
+			</div>
+		</div>
+		<!--End Users List Page -->
+				
+		<!--Start My Profile Page -->
+		<div id="my_profile_page" class="appPage">		
+			
+			<div class="myProfileWrap">
+			
+				<div data-role="content" data-scroll="false" class="bg_light_orange">
+					
+					<h1>My Profile</h1>
+					
+					<div class="dots"></div>				
+					
+					<div id="my_info">
+						<div class="user_pic left">
+							<div class="special4"></div>
+							<img alt="" src="" />										
+						</div>
+						<div class="txt">					
+							<strong><span></span></strong><br />
+							<span></span><br />						
+						</div>
+					</div>
+					
+					<div id="my_buttons">
+						<br />						
+						<div id="get_stat_div"><button data-theme="e" id="get_stat">Statistics</button></div>	
+						<div id="upload_image_div"><button data-theme="e" id="upload_image">Manage Images</button></div>											
+					</div>
+						
+				</div>
+				
+				<div class="orange_line" data-scroll="false"></div>
+				
+				
+				<div data-role="content" data-scroll="false" id="statistics">
+					<div class="stat_side">
+						<div class="items_wrap">
+							<div class="stat_title">Added You To Friends</div>
+							<div class="stat_value" onclick="app.getStatUsers(this.id);" id="addedMeToFriends"></div>
+						</div>
+						<div class="items_wrap">
+							<div class="stat_title">Contacted You</div>
+							<div class="stat_value" onclick="app.getStatUsers(this.id);" id="contactedMe"></div>
+						</div>
+						<div class="items_wrap">
+							<div class="stat_title">Viewed Your Profile</div>
+							<div class="stat_value" onclick="app.getStatUsers(this.id);" id="lookedMe"></div>
+						</div>
+					</div>
+					<div class="stat_side">
+						<div class="items_wrap">
+							<div class="stat_title">Added To Friends</div>
+							<div class="stat_value" onclick="app.getStatUsers(this.id);" id="friends"></div>
+						</div>
+						<div class="items_wrap">
+							<div class="stat_title">Added To Black List</div>
+							<div class="stat_value" onclick="app.getStatUsers(this.id);" id="blackList"></div>
+						</div>
+						<div class="items_wrap">
+							<div class="stat_title">Contacted</div>
+							<div class="stat_value" onclick="app.getStatUsers(this.id);" id="contactedThem"></div>
+						</div>
+					</div>
+				</div>
+				
+				
+				
+				
+				<div id="uploadDiv">
+				
+					
+				
+				
+					<div class="grey_line_wrap" data-scroll="false">
+						<div class="grey_line"></div>
+					</div>
+					<div data-role="content" data-scroll="false">
+						
+						<div class="up_buttons take_a_photo" onclick="app.capturePhoto(app.pictureSource.CAMERA, app.destinationType.FILE_URI);"></div>
+						<div class="up_buttons choose_from_library" onclick="app.capturePhoto(app.pictureSource.PHOTOLIBRARY, app.destinationType.FILE_URI);"></div>
+						<div class="up_buttons my_images" onclick="app.displayUserImages();"></div>
+						<br />
+						
+						<!-- <img src="images/welcome.jpg" alt="" id="myNewPhoto" />  -->
+					
+					
+					<!-- 
+					<script>
+					$(document).ready(
+						function(){			
+							$('#myNewPhoto').Jcrop({
+								onChange: showPreview,
+								onSelect: showPreview,
+								aspectRatio: 1
+							});   	
+						}
+					);
+					
+					
+					function showPreview(coords)
+					{
+						var rx = 100 / coords.w;
+						var ry = 100 / coords.h;
+
+						$('#preview').css({
+							width: Math.round(rx * 500) + 'px',
+							height: Math.round(ry * 370) + 'px',
+							marginLeft: '-' + Math.round(rx * coords.x) + 'px',
+							marginTop: '-' + Math.round(ry * coords.y) + 'px'
+						});
+					}
+					
+					</script>
+					-->
+					
+					
+					
+					
+					
+					</div>
+					
+					<br /><br />
+					
+					
+					
+				</div>
+			</div>
+		
+		</div> 
+		
+		<!--End My Profile Page -->
+		
+		
+		<!--Start Search From Page -->
+		<div id="search_form_page"  class="appPage">
+			<div data-role="content" data-scroll="false">
+				<div class="content_wrap">
+								
+				<h1>Search</h1>
+				<div class="dots"></div>
+				<form action="" method="post" id="searchForm" name="searchForm">	    			
+					
+					<div class="sf_txt">Gender:</div>
+					<div class="sf_sel_wrap">
+						<select name="gender" id="gender">
+							<option value="" selected="selected">All</option>
+							<option value="0">Male</option>
+							<option value="1">Female</option>
+						</select>
+					</div>
+					
+					
+					<div class="sf_txt">Country:</div>
+					<div class="sf_sel_wrap">
+						<select name="country" id="countries_list">
+							<option value="">Choose Country</option>													
+						</select>
+					</div>
+					
+					<div id="regions_wrap">
+						<div class="sf_txt">State:</div>				
+						<div class="sf_sel_wrap regionsList">
+						
+						</div>					
+					</div>
+					
+					<div id="test"></div>					
+					
+					<div class="sf_txt">Age:</div>				
+					<div class="sf_sel_wrap">
+						<div class="sf_sel_wrap2 age_1">
+									
+						</div>					
+						
+						<div class="sf_txt2"> to </div>
+											
+						<div class="sf_sel_wrap2 age_2">
+							
+						</div>
+					</div>
+					
+					<div class="sf_txt  mar_top_8" style="line-height:20px;">Life Challenge:</div>
+					<div class="sf_sel_wrap">
+						<select name="healthId" id="health_list">
+							
+													
+						</select>
+					</div>	  			
+					
+					<div id="right_buttons">
+						<!-- <div id="search" class="search_but" onclick="app.search();"></div>  -->				
+						<input type="button" data-theme="e" value="Search" onclick="app.search();">
+					</div>
+									
+					<!-- 
+					<div id="right_buttons">
+						<div id="my_search" class="search_but"></div>
+					</div>				
+					 -->
+					
+				
+				</form>
+							
+				
+				
+				
+					
+				</div>					
+			</div>
+		
+		</div>
+		<!--End Search From Page -->
+		
+		
+		
+		
+		<!--Start Search From Page -->
+		<div id="user_profile_page"  class="appPage">
+			<div data-role="content">
+				<div class="content_wrap">
+		
+		
+					<h1>Extended Profile <span></span></h1>
+					<div class="dots"></div>
+					
+					<div id="user_profile">
+						<div id="user_pictures">
+												
+							
+							<div class="pic_wrap left"><!-- class="<?if(empty($this->vars['pic_2']) and empty($this->vars['pic_3']) ):?>pic_wrap_center<?else:?>pic_wrap<?endif;?>" -->
+								
+								 
+								
+								<a href="#" class="fancybox" rel="images">
+									<img src="" alt="" id="pic1" />
+								</a>
+								
+								
+								 
+								<div class="gal_top_icons">				
+										
+									<div class="special3 left"></div>
+															
+									<div class="blue_star left"></div>						
+								</div>
+								
+								<div class="on5"></div>
+								
+								
+								
+														
+							</div>
+							
+							
+							
+							<div class="pic_wrap">
+								<a href="#" class="fancybox" rel=""><img src="" id="pic2" /></a>
+							</div>
+							   
+							
+							
+							<div class="pic_wrap">
+								<a href="#" class="fancybox" rel=""><img src="" id="pic3" /></a>
+							</div>
+							
+							
+						</div>
+						
+						<div class="clear"></div>
+						
+						
+						
+						<div id="user_details">
+						</div>
+						
+						
+						
+						
+						
+					</div>
+			
+				</div>					
+			</div>		
+		</div>					
+					
+			
+		<!--Start Messenger Page -->
+		<div id="messenger_page"  class="appPage"> 
+			<div data-role="content">
+				<div class="content_wrap">
+					<h1>Messenger</h1>
+					<div class="dots"></div>
+					<div class="chats_wrap">
+					
+					</div>			
+				</div>					
+			</div>		
+		</div>
+		<!--End Messenger Page -->		
+		
+		<!--Start Chat Page -->
+		<div id="chat_page"  class="appPage"> 
+			<div data-role="content">
+				<div class="content_wrap">
+					<h1>Chat With <span></span></h1>
+					<div class="dots"></div>
+					
+					<div class="sendMessDiv">
+						<div class="messField"><textarea id="message"></textarea></div>
+						<div class="sendMessButDiv"><button class="sendMes" data-theme="e" onclick="app.sendMessage();">Send</button></div>
+					</div>					
+					
+					<div class="clear"></div>
+					
+					<div class="chat_wrap">
+					
+					</div>			
+				</div>					
+			</div>		
+		</div>
+		<!--End Chat Page -->
+			
+		
+		<!--Start Delete Images Page -->
+		<div id="delete_images_page"  class="appPage">
+			<div data-role="content">
+				<div class="content_wrap">
+					<h1>My Images</h1>
+					<div class="dots"></div>
+					<div class="imagesButtonsWrap">
+						<div class="up_buttons take_a_photo" onclick="app.capturePhoto(app.pictureSource.CAMERA, app.destinationType.FILE_URI);"></div>
+						<div class="up_buttons choose_from_library" onclick="app.capturePhoto(app.pictureSource.PHOTOLIBRARY, app.destinationType.FILE_URI);"></div>
+						<div class="dots"></div>
+					</div>
+					<div class="imagesListWrap"></div>
+					
+						
+				</div>					
+			</div>		
+		</div>
+		<!--End Delete Images Page -->
+		
+		<!--Start Upload Image Page -->
+		<div id="upload_image_page"  class="appPage"> 
+			<div data-role="content">
+				<div class="content_wrap">
+					<h1>Upload Image</h1>
+					<div class="dots"></div>
+					<div class="regInfo"></div>					
+					<div class="up_buttons take_a_photo" onclick="app.capturePhoto(app.pictureSource.CAMERA, app.destinationType.FILE_URI);"></div>
+					<div class="up_buttons choose_from_library" onclick="app.capturePhoto(app.pictureSource.PHOTOLIBRARY, app.destinationType.FILE_URI);"></div>
+					<div class="up_buttons my_images" onclick="app.displayUserImages();"></div>
+
+					<div class="up_buttons continue" onclick="app.chooseMainPage();"></div>
+					
+				</div>					
+			</div> 	
+		</div>
+		<!--End Upload Image Page -->
+		
+		<!--Start Report Abuse Page -->
+		<div id="report_abuse_page"  class="appPage">
+			<div data-role="content">
+				<div class="content_wrap">
+					<h1>Report Abuse</h1>
+					<div class="dots"></div>
+					
+					<strong>Comments:</strong>
+					<textarea style="height:130px;" id="abuseMessage"></textarea>
+					<button data-theme="e" onclick="app.reportAbuse();">Send</button>
+					
+					
+				</div>
+			</div>
+		</div>
+		<!--End Report Abuse Page -->
+		
+		
+		<!--Start Register Page -->
+		<div id="register_page"  class="appPage"> 
+			<div data-role="content">
+				<div class="content_wrap">
+					<h1>Registration</h1>
+					<div class="dots"></div>
+					<div class="regFormWrap">
+					
+					
+					<form id="regForm" data-role="none" onsubmit="return false;">
+						<div class="regTxt lineHeight_50">E-mail</div><div class="regInput"><input type="text" name="userEmail" id="userEmail" data-role="none" maxlength="50" /></div>
+						<div class="clear"></div>
+						<div class="regTxt mar_top_8">Retype Email</div><div class="regInput"><input type="text" id="userEmail2" name="userEmail2" data-role="none" maxlength="50" /></div>
+						<div class="clear"></div>
+						<div class="regTxt lineHeight_50">Password</div><div class="regInput"><input type="password" name="userPass" id="userPass" maxlength="50" data-role="none" /></div>
+						<div class="clear"></div>
+						<div class="regTxt mar_top_8">Retype Password</div><div class="regInput"><input type="password" name="userPass2" id="userPass2" maxlength="50" data-role="none" /></div>
+						<div class="clear"></div>
+						
+						<div class="regTxt lineHeight_50">Username</div><div class="regInput"><input type="text" name="userNic" id="userNic" data-role="none" maxlength="50" /></div>
+						<div class="clear"></div>
+						
+						
+						  
+						<div class="regTxt lineHeight_50">Gender</div>
+						<div class="regInput">
+						
+						
+						
+							
+							<select name="userGender" id="userGender">
+								<option value="0" selected="selected">Male</option>
+								<option value="1">Female</option>
+							</select>
+						  
+						    
+						   
+						    <!-- 
+						    <div data-role="fieldcontain">
+							<select name="userGender" id="confirm" data-role="slider" data-theme="c" data-track-theme="c">
+							<option value="0">Male</option>
+							<option value="1">Female</option>
+							</select>
+							</div>
+							 -->
+						    
+						    
+						    			
+						</div>
+						<div class="clear"></div>
+						
+						<div class="bold"> Your date of birth </div>
+						<div class="clear"></div>
+						<div class="regInput">
+							<div id="birthDate" class="left">
+							
+							</div>
+						</div>
+						<div class="clear"></div>
+						
+						
+						
+						
+						
+						<div class="regTxt mar_top_8">Sexual Preference</div>
+						<div class="regInput" style="width:180px;">
+							<select name="sexPrefId" id="sex_preference_list">						
+													
+							</select>
+						</div>
+						<div class="clear"></div>
+												
+						<div class="regTxt lineHeight_50">Country</div>
+						<div class="regInput" style="width:180px;">
+							<select name="countryCode" id="countries_list">
+							</select>
+						</div>
+						<div class="clear"></div>
+						
+						
+						
+						<div class="regTxt lineHeight_50" id="regions_wrap">State</div>				
+						<div class="regInput regionsList" style="width:180px;">
+							
+						</div>					
+						<div class="clear"></div>
+						
+						<div class="regTxt lineHeight_50">City</div><div class="regInput"><input type="text" name="cityName" id="cityName" data-role="none" maxlength="50" /></div>
+						<div class="clear"></div>
+						
+						
+						<div class="regTxt lineHeight_50">Zip Code</div><div class="regInput"><input type="text" name="zipCode" id="zipCode" data-role="none" maxlength="50" /></div>
+						<div class="clear"></div>
+						
+						
+						<div class="regTxt mar_top_8">a of Origin</div>
+						<div class="regInput" style="width:180px;">
+							<select name="countryOfOriginCode" id="countries_list2">
+								<option value="">Choose Country</option>													
+							</select>
+						</div>
+						<div class="clear"></div>
+						
+						<div class="regTxt lineHeight_50">About Me</div><div class="regInput"><textarea name="aboutMe" id="aboutMe" data-role="none"></textarea></div>
+						<div class="clear"></div>
+						
+						<div class="regTxt lineHeight_8">Looking For</div><div class="regInput"><textarea name="lookingFor" id="lookingFor" data-role="none"></textarea></div>
+						<div class="clear"></div>
+						
+						<div class="regTxt mar_top_8">Life Challenge</div>
+						<div class="regInput" style="width:180px;">
+							<select name="healthId" id="health_list">
+								
+								
+							</select>
+						</div>
+						<div class="clear"></div>
+						
+						<div class="regTxt mar_top_8">Mobility</div>
+						<div class="regInput" style="width:180px;">
+							<select name="mobilityId" id="mobility_list">
+								
+							</select>
+						</div>
+						<div class="clear"></div>
+						
+												
+						<br />
+						<br />
+						<div class="bold">I confirm that I have read and agreed to the Terms and Conditions of Service of membership at Dating4disabled.com.</div>
+						<div class="clear"></div>
+						
+						<div data-role="fieldcontain">
+							<select name="confirm" id="confirm" data-role="slider" data-theme="c" data-track-theme="c">
+							<option value="0">No</option>
+							<option value="1">Yes</option>
+							</select>
+						</div>
+						
+						
+						<br />
+						
+						<!-- <label><input type="checkbox" name="remember_me" value="remember_me"  /> <span>remember me</span> </label>  -->															
+							
+					</form>
+					
+					
+					
+						<button data-theme="e" onclick="app.sendRegData();">Send</button>  
+					
+					<br /><br />
+					<br /><br />
+					<br /><br />
+					
+					</div>
+				</div>					
+			</div>		
+		</div>
+		<!--End Register Page -->
+				
+		<!--Start Subsribtion Page --> 
+		<div id="subscription_page"  class="appPage">
+			<div data-role="content">
+				<div class="content_wrap">
+					<h1>Purchase a subscription at dating4disabled</h1><br/><br/>
+						
+									
+					<div>
+						<a href="#" class="subscr_quest"><span>+</span> Why pay for a Dating4Disabled.com membership?</a>
+						<br /><br />			
+						<div class="subscr_text hidden">
+						Following years of providing all services to it's worldwide members for free, to cope with rising costs, 
+						Dating4Disabled.com now charges a reasonable monthly fee. The site has been upgraded to a new server and 
+						improved member services include having expanded our blogs and forum capabilities. 
+						Join Dating4Disabled.com as a paying member today and become a part of our outstanding international 
+						community of fine people who are serious about finding a life partner, husband, wife, and/or best friend.						
+						</div>
+					</div>
+					
+					<div>
+						<a href="#" class="subscr_quest"><span>+</span> What are the benefits of becoming a paid member of Dating4Disabled.com?</a>
+						<br /><br />			
+						<div class="subscr_text hidden">
+						Paid membership entitles you to access and read an unlimited number of member messages sent to you each month. 
+						Additionally, paying members' messages can be read by anyone that the paying member writes to.			
+						</div>
+					</div>
+					
+					<div>
+						<a href="#" class="subscr_quest"><span>+</span>Subscription Information</a>
+						<br /><br />
+						<div class="subscr_text hidden">
+							- Payment will be charged to iTunes Account at confirmation of purchase<br>
+							- Subscription automatically renews unless auto-renew is turned off at least 24-hours before the end of the current period<br>
+							- Account will be charged for renewal within 24-hours prior to the end of the current period, and identify the cost of the renewal<br>
+							- Subscriptions may be managed by the user and auto-renewal may be turned off by going to the user's Account Settings after purchase<br>
+							- No cancellation of the current subscription is allowed during active subscription period<br>
+							- Links to dating4disabled Privacy Policy and Terms of Use
+						</div>
+					</div>
+					
+					<h3>To pay please choose your subscription method</h3>
+					
+					<div id="subscrList">
+						
+						<!--
+						<div class="subscr">
+							<div class="subscr_left"><input type="radio" name="subscr" value="1" class="subscr_ch" /></div> 
+							<div class="subscr_center">1 month recurring<br />subscription</div>
+							<div class="subscr_right">$19.90</div>
+						</div>
+						
+						<div class="subscr">
+							<div class="subscr_left"><input type="radio" name="subscr" value="2" class="subscr_ch" /></div>
+							<div class="subscr_center">
+								3 months recurring<br />subscription
+								<br /> <span>($13.30 a month)</span>
+							</div>
+							<div class="subscr_right">$39.90</div>
+						</div>
+						
+						<div class="subscr">
+							<div class="subscr_left"><input type="radio" name="subscr" value="3" class="subscr_ch" /></div>
+							<div class="subscr_center">
+								6 months recurring<br />subscription
+								<br /> <span>($11.65 a month)</span>
+							</div>
+							<div class="subscr_right">$69.90</div>
+						</div>
+						
+						<div class="subscr">
+							<div class="subscr_left"><input type="radio" name="subscr" value="4" class="subscr_ch" /></div>
+							<div class="subscr_center">
+							12 months recurring<br />subscription
+							<br /> <span>($10.00 a month)</span>
+							</div>
+							<div class="subscr_right">$120.00</div> 
+						</div>
+						 
+						 -->
+						
+						
+					</div>
+					
+					
+					<!-- 
+					<div>
+						<button data-theme="a" id="pay">Continue</button>						
+					</div>
+					 -->
+					
+					<br />
+					
+					
+					
+					<div>
+						<a href="#" class="subscr_quest"><span>+</span> If I am not a paying member, can I still use services of Dating4Disabled.com?</a>
+						<br /><br />			
+						<div class="subscr_text hidden">
+						Yes! All site members can use site services for free. You can post to forums and blogs and send messages to all site members. 
+						Additionally, Dating4Disabled.com provides 1(one) free gift point each month to each non-paying site member. 
+						The gift point allows the non paying member to read one message each month for free. Note that the free gift point is given to 
+						non-paying members on the 1st of the month and must be used within that month. Free Points may not be accumulated			
+						</div>
+					</div>
+					
+				</div>					
+			</div>
+		</div>
+		<!--End Subsribtion Page -->
+		
+	
+	
+	</div>
+	
+	
+	
+	
+	
+	
+	<div class="appTemplates">
+	
+	
+		<!-- START User Data Template -->
+			<div id="userDataTemplate">	
+				<div class="user_data">					
+						<div class="user_photo_wrap">
+							<img class="left user_pic" alt="" src="[IMAGE]" />
+						</div>
+						<div class="user_short_txt">
+							<strong>							
+								[USERNICK], <span>[AGE]</span></strong><br />						
+								<span>[COUNTRY] [CITY]</span><br />					
+								[ABOUT]							
+						</div>				
+					
+					
+						<div class="send_mes" onclick="app.getChat([USER_ID],'[USERNICK]');"></div>
+										
+					<div class="on2"></div>
+					
+					<a href="" data-transition="slide">
+						<div class="gal_top_icons">				
+							<!-- Is Paying -->		
+							<div class="special3 left"></div>
+							<!-- Is New -->							
+							<div class="blue_star left"></div>
+													
+						</div>
+					</a>					
+					<div class="distance_value"></div>				
+				</div>
+	
+			</div>
+			<!-- END User Data Template -->
+			
+			
+			<!-- START User Profile Buttons Template -->
+			<div id="userProfileButtonsTemplate">
+				<button onclick="app.getChat([USER_ID],'[USERNICK]');" data-theme="e">Send Message</button>	  					
+				<div class="clear"></div>
+				<br />
+			</div>
+			<!-- END User Profile Buttons Template -->
+			
+			<!-- START User Profile Buttons Template 2-->
+			<div id="userProfileButtonsTemplate_2">
+				<button onclick="app.showPage('report_abuse_page')" data-theme="e">Report Abuse!</button>
+				<div class="clear"></div>
+				<br />
+			</div>
+			<!-- END User Profile Buttons Template 2-->
+			
+			
+			<!-- START User Profile Group Template 2-->
+			<div id="userProfileGroupTemplate">
+				<div class="user_data_group bold">[GROUP_NAME]</div>
+			</div>
+			<!-- END User Profile Group Template -->
+			
+			
+			<!-- START User Profile Line Template -->
+			<div id="userProfileLineTemplate">
+				<div class="user_data_wrap">
+					<div class="user_data bold">[LINE_NAME]</div>
+					<div class="user_data">[LINE_VALUE]</div>
+					<div class="underline"></div>
+				</div>
+			</div>
+			<!-- END User Profile Line Template -->
+			
+			
+			<!-- START Messenger Template -->
+			<div id="messengerTemplate">
+				<div class="mail_section" onclick="app.getChat([USER_ID],'[USERNICK]');">					
+					<div class="new_mes_count"></div>
+					<div class="txt">
+						<strong>[USERNICK]</strong><br />
+						[RECENT_MESSAGE]					
+					</div>					
+					<img src="[IMAGE]" />
+					<span>[DATE]</span>					
+					<div class="special2 hidden"></div>
+										 
+				</div>
+			</div>
+			<!-- END Messenger Template -->
+			
+			<!-- START Chat Message Template -->
+			<div id="chatMessageTemplate">
+				<div class="[MESSAGE_TYPE] [MESSAGE_FLOAT]">[MESSAGE]</div>
+				<div class="message_info [INFO]">sent: [DATE] time: [TIME]</div>
+			</div>
+			<!-- END Chat Message Template -->
+			
+			<!-- START Images List Template -->
+			<div id="editImageTemplate">				
+				<div class="userImageWrap">
+					<img src="[IMAGE]" width="295" /><br />
+					<span class="imageStatus"></span>
+					<button onclick="app.confirmDeleteImage([IMAGE_ID]);" data-theme="e">Delete</button>
+					<br /><br /><br />
+				</div>
+			</div>
+			<!-- END Images List Template -->
+			
+			<!-- START Loading Bar Template -->
+			<div id="loadingBarTemplate">
+			<div id="warningGradientOuterBarG">
+				<div id="warningGradientFrontBarG" class="warningGradientAnimationG">
+					<div class="warningGradientBarLineG">
+					</div>
+					<div class="warningGradientBarLineG">
+					</div>
+					<div class="warningGradientBarLineG">
+					</div>
+					<div class="warningGradientBarLineG">
+					</div>
+					<div class="warningGradientBarLineG">
+					</div>
+					<div class="warningGradientBarLineG">
+					</div>
+				</div>
+			</div>
+			</div>
+			<!-- END Loading Bar Template -->
+			
+			<!-- START Subscription Item Template -->
+			<div	 id="subscrItemTemplate">
+				<div class="subscr" onclick="IAP.buy('[PURCHASE_ID]');">
+					<div class="subscr_left"><input type="radio" name="subscr" value="" class="subscr_ch" /></div>
+					<div class="subscr_center">[TITLE]</div>
+					<div class="subscr_right">[PRICE]</div>
+				</div>
+			</div>
+			<!-- END Subscription Item Template -->
+	
+	
+	</div>
+	
+	
+	<div class="loading">
+		<div class="spinner-wrapper">
+			<span class="spinner-text">LOADING</span>
+			<span class="spinner"></span>
+		</div>
+	</div>
+	
+		
+	</body>
+</html>
