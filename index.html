@@ -33,10 +33,10 @@
 	
 	<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
 	
-	<script src="PushNotification.js"></script>
 	<script src="js/fastclick.js"></script>
 	<script src="js/index.js"></script>
 	<script src="js/iap.js"></script>
+	<script src="js/pswp.js"></script>
 	<script src="js/jquery.mobile-1.3.1/jquery.mobile-1.3.1.min.js"></script>
 
 	
@@ -44,6 +44,21 @@
 	<!-- Add fancyBox -->
 	<link rel="stylesheet" href="js/fancybox/source/jquery.fancybox.css?v=2.1.3" type="text/css" media="screen" />
 	<script type="text/javascript" src="js/fancybox/source2/jquery.fancybox.pack.js?v=2.1.3"></script>
+	
+	<!-- Core JS file -->
+	<script src="js/photoswipe/photoswipe.min.js"></script>
+	
+	<!-- UI JS file -->
+	<script src="js/photoswipe/photoswipe-ui-default.min.js"></script>
+	
+	<!-- Core CSS file -->
+	<link rel="stylesheet" href="js/photoswipe/photoswipe.css">
+		
+	<!-- Skin CSS file (styling of UI - buttons, caption, etc.)
+	In the folder of skin CSS file there are also:
+	- .png and .svg icons sprite,
+	- preloader.gif (for browsers that do not support CSS animations) -->
+	<link rel="stylesheet" href="js/photoswipe/default-skin/default-skin.css">
 	
 	
 </head>
@@ -84,52 +99,83 @@
 	
 		<!--Start Login Page -->
 		<div id="login_page" class="appPage">
-			
+		
 			<div data-role="content">
-				<div class="content_wrap"> 			
+				<div class="content_wrap">
 					<form method="post" id="authForm" name="authForm" data-role="none">
-						<div id="user_txt" class="mar_top_8">E-mail or Username</div><div id="user_input"><input type="text" name="email" class="email" value="" data-role="none" maxlength="50" /></div>
-						<div class="clear"></div>
-						<div id="pass_txt" class="lineHeight_50">Password</div><div id="pass_input"><input type="password" name="password" class="password" value="" maxlength="50" data-role="none" /></div>
-						<div class="clear"></div>
-						<!-- <label><input type="checkbox" name="remember_me" value="remember_me"  /> <span>remember me</span> </label>  -->
-						<!--<div id="fog_pass"><a href="#" rel="external" data-ajax="false">I've forgot my password</a></div>-->
-						<!--<div id="login" onclick="app.sendAuthData();"></div>-->
-						<div class="right"><input type="button" value="Login" onclick="app.sendAuthData();" data-theme="e"></div>
-															
-					</form>								
-				</div>				
-			</div>		
-			
-			<div id="orange_line"></div>		
-			
-			<div data-role="content" data-scroll="false">
-				<div class="content_wrap">				
-					<div class="user_data_preview" id="udp_0">						
-						<div class="user_photo_wrap">
-							<img src="#" alt="" class="user_photo" />						
-						</div> 
-						<a href="#"><span></span></a>
-						<div class="address"></div>
-						<div class="on">ON</div>					
+						<div style="padding: 15px;">
+							<div id="user_input"><input type="text" placeholder="E-mail or Username" name="email" class="email" value="" data-role="none" maxlength="50" /></div>
+							<div class="clear"></div>
+							<div id="pass_input"><input type="password" placeholder="Password" name="password" class="password" value="" maxlength="50" data-role="none" /></div>
+							<div class="clear"></div>
+							<!-- <label><input type="checkbox" name="remember_me" value="remember_me"  /> <span>remember me</span> </label>  -->
+							<div class="left">
+								<input type="button" value="Forgot password" onclick="app.showPage('forgot_password_page');" data-theme="e">
+							</div>
+							<!--<div id="login" onclick="app.sendAuthData();"></div>-->
+							<div class="right"><input type="button" value="Login" onclick="app.sendAuthData();" data-theme="e"></div>
 					</div>
-					<div class="user_data_preview" id="udp_1">						
-						<div class="user_photo_wrap">
-							<img src="#" alt="" class="user_photo" />						
-						</div> 
-						<a href="#"><span></span></a>
-						<div class="address"></div>
-						<div class="on">ON</div>					
-					</div>
-				</div>
-			</div>			
+				</form>
+			</div>
+		</div>
+		
+			<!--<div id="orange_line"></div>-->
+		
+		
 		</div>
 		<!--End Login Page -->
+	
+		<!--Start Forgot Password Page -->
+		<div id="forgot_password_page"  class="appPage">
+			<div data-role="content">
+				<div class="content_wrap">
+					
+					<div class="regTxt mar_top_8">Your Email</div>
+					<div class="regInput">
+						<input type="text" name="userEmail" id="userEmail" data-role="none" maxlength="50" />
+					</div>
+					<div class="clear"></div>
+					<button data-theme="e" onclick="app.resetPassword();">Reset Password</button>
+				</div>
+			</div>
+		</div>
+		<!--End Forgot Password Page -->
+		
 		
 		<!--Start Main Page -->
 		<div id="main_page"  class="appPage">
 			<div data-role="content" data-scroll="false">
 				<div class="content_wrap">
+					
+					
+					<div id="search_friends" onclick="app.getSearchForm();"></div>
+					<div id="friends_online" onclick="app.getOnlineNow();"></div>
+					<div id="mail_box" onclick="app.getMessenger();"><div id="new_mes_count"></div></div>
+					
+					<div class="clear"></div>
+					
+					<div id="looked_me" onclick="app.getStatUsers('lookedMe');"></div>
+					<div id="looked_them" onclick="app.getStatUsers('looked');"></div>
+					<div id="contacted_them" onclick="app.getStatUsers('contactedThem');"></div>
+					
+					<div class="clear"></div>
+					
+					<div id="favorites" onclick="app.getStatUsers('friends');"></div>
+					<div id="profile" onclick="app.getMyProfileData();"></div>
+					<div id="update_profile" onclick="app.getEditProfile();"></div>
+					
+					<div class="clear"></div>
+					
+					
+					
+					<div id="manage_images" onclick="app.displayUserImages();"></div>
+					<div id="contact_us" onclick="app.showPage('contact_us_page');"></div>
+					
+					<div class="clear"></div>
+					
+					
+					<!--
+					
 					<a href="#" onclick="app.getOnlineNow();"><div id="friends_online"></div></a>
 					<a href="#" onclick="app.getSearchForm();"><div id="search_friends"></div></a>
 					<a href="#" onclick="app.getMyProfileData();"><div id="profile"></div></a>   
@@ -137,6 +183,8 @@
 						<div id="mail_box"><div id="new_mes_count"></div></div>
 					</a>				
 					<a href="#" id="bannerLink"><div id="why_subscr"><img src="http://m.dating4disabled.com/images/main_banner.png" /></div></a>
+					 
+					 -->
 					
 				</div>					
 			</div>		
@@ -272,7 +320,7 @@
 					<div id="my_buttons">
 						<br />						
 						<div id="get_stat_div"><button data-theme="e" id="get_stat">Statistics</button></div>	
-						<div id="upload_image_div"><button data-theme="e" id="upload_image">Manage Images</button></div>											
+						<div id="upload_image_div"><button data-theme="e" id="upload_image">Manage Photos</button></div>
 					</div>
 						
 				</div>
@@ -291,7 +339,7 @@
 							<div class="stat_value" onclick="app.getStatUsers(this.id);" id="contactedMe"></div>
 						</div>
 						<div class="items_wrap">
-							<div class="stat_title">Viewed Your Profile</div>
+							<div class="stat_title">Viewed My Profile</div>
 							<div class="stat_value" onclick="app.getStatUsers(this.id);" id="lookedMe"></div>
 						</div>
 					</div>
@@ -433,12 +481,20 @@
 							
 													
 						</select>
-					</div>	  			
-					
+					</div>
+  			
+					<div class="sf_txt">Nickname:</div>
+					<div class="sf_sel_wrap">
+						<input type="text" class="nickName" value="" />
+					</div>
+			
 					<div id="right_buttons">
 						<!-- <div id="search" class="search_but" onclick="app.search();"></div>  -->				
 						<input type="button" data-theme="e" value="Search" onclick="app.search();">
 					</div>
+					
+					
+					
 									
 					<!-- 
 					<div id="right_buttons">
@@ -474,8 +530,8 @@
 					<div id="user_profile">
 						<div id="user_pictures">
 												
-							
-							<div class="pic_wrap left"><!-- class="<?if(empty($this->vars['pic_2']) and empty($this->vars['pic_3']) ):?>pic_wrap_center<?else:?>pic_wrap<?endif;?>" -->
+							<!--
+							<div class="pic_wrap left">
 								
 								 
 								
@@ -510,6 +566,21 @@
 							<div class="pic_wrap">
 								<a href="#" class="fancybox" rel=""><img src="" id="pic3" /></a>
 							</div>
+							 
+							 -->
+							
+							
+							
+							<div class="my-gallery" itemscope itemtype="http://schema.org/ImageGallery">
+								
+								
+								
+							</div>
+							
+							<div class="noPicture center hidden">
+								<img alt="" src="">
+							</div>
+
 							
 							
 						</div>
@@ -529,7 +600,27 @@
 			
 				</div>					
 			</div>		
-		</div>					
+		</div>
+		
+		
+		<!--Start Contact Us Page -->
+		<div id="contact_us_page"  class="appPage">
+			<div data-role="content">
+				<div class="content_wrap">
+					<h1>Contact Us</h1>
+					<div class="dots"></div>
+					<div class="chats_wrap">
+						
+						<div class="regTxt lineHeight_50">Text</div><div class="regInput"><textarea name="messageToAdmin" id="messageToAdmin" data-role="none"></textarea></div>
+						<div class="clear"></div>
+						<button class="sendMes" data-theme="e" onclick="app.sendMessageToAdmin();">Send</button>
+						
+						
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--End Messenger Page -->
 					
 			
 		<!--Start Messenger Page -->
@@ -895,6 +986,25 @@
 		</div>
 		<!--End Subsribtion Page -->
 		
+		
+		<!--Start Edit Profile Page -->
+		<div id="edit_profile_page"  class="appPage">
+			<div data-role="content">
+				<div class="content_wrap">
+					<h1>Edit Profile</h1>
+					<div class="dots"></div>
+					<div class="clear"></div>
+					<button data-theme="e" onclick="app.displayUserImages();">Manage Photos</button>
+					<div class="edit_wrap">
+						
+						
+						
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--End Edit Profile Page -->
+		
 	
 	
 	</div>
@@ -975,6 +1085,17 @@
 			</div>
 			<!-- END User Profile Line Template -->
 			
+			<!-- START User Photo Template -->
+			<div id="userPhotoTemplate">
+				<figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject" class="pic_wrap">
+					<a href="#" itemprop="contentUrl" data-size="1x1">
+						<img src="" id="[ID]" itemprop="thumbnail" alt="Image description" />
+					</a>
+					<!--<figcaption itemprop="caption description">Image caption</figcaption>-->
+				</figure>
+			</div>
+			<!-- END User Photo Template -->
+			
 			
 			<!-- START Messenger Template -->
 			<div id="messengerTemplate">
@@ -995,6 +1116,7 @@
 			<!-- START Chat Message Template -->
 			<div id="chatMessageTemplate">
 				<div class="[MESSAGE_TYPE] [MESSAGE_FLOAT]">[MESSAGE]</div>
+				<div class="message_status [MESSAGE_STATUS_VISIBILITY]"><img src="images/[MESSAGE_STATUS_IMAGE]"></div>
 				<div class="message_info [INFO]">sent: [DATE] time: [TIME]</div>
 			</div>
 			<!-- END Chat Message Template -->
@@ -1040,6 +1162,157 @@
 				</div>
 			</div>
 			<!-- END Subscription Item Template -->
+			
+			
+			<!-- Start Edit Profile Template -->
+			<div id="userEditProfileTemplate">
+				<div class="sf_txt"><span>Username</span></div>
+				<div class="sf_sel_wrap">
+					<div class="save" style="display: none;" >
+						<div style="float: left;width: 70%;">
+							<input type="text" name="userNic" id="userNic" data-role="none" value="[userNick]"  />
+						</div>
+						<div class="clear"></div>
+						<button data-role="none" name="submit" onclick="app.saveProf(this,'input');return false;" class="formButton">Save</button>
+						<button data-role="none" name="cancel" id="cancelNick" onclick="app.editProf(this);return false;" class="formButton">Cancel</button>
+					</div>
+					<div class="edit">
+						<div style="float: left;width: 70%">[userNick]</div>
+						<button data-role="none" onclick="app.editProf(this);return false;" name="edit" class="formButton">Edit</button>
+					</div>
+				</div>
+				<div class="clear"></div>
+				
+				<div class="devider"></div>
+				
+				<div class="sf_txt"><span>Password</span></div>
+				<div class="sf_sel_wrap">
+					<div class="save" style="display: none; position: relative;" >
+						<div style="width: 70%;float: left;">
+							<input type="password" name="userPass" id="editedUserPass" value="[userPass]" data-role="none"  />
+						</div>
+						<div class="clear"></div>
+						<strong style="margin-left: -100px;">Retype Password</strong>
+						<div class="clear"></div>
+						<div style="width: 70%;float: left;">
+							<input type="password" name="pass2" id="editedUserPass2" value="[userPass]" data-role="none" />
+						</div>
+						<div class="clear"></div>
+						<button data-role="none" name="submit" onclick="app.saveProf(this,'input:first');return false;" class="formButton">Save</button>
+						<button data-role="none" name="cancel" id="cancelNick" onclick="app.editProf(this);return false;" class="formButton">Cancel</button>
+					</div>
+					<div class="edit">
+						<div style="float: left;width: 70%">
+							<!-- <input disabled type="password" name="userPass" id="userPass" value="[userPass]" data-role="none" /> -->
+						</div>
+						<button data-role="none" onclick="app.editProf(this);return false;" name="edit" class="formButton">Edit</button>
+					</div>
+				</div>
+				<div class="clear"></div>
+				
+				<div class="devider"></div>
+				
+				<div class="sf_txt"><span>E-mail</span></div>
+				<div class="sf_sel_wrap">
+					<div class="save" style="display: none;" >
+						<div style="float: left;width:70%;" >
+							<input type="text" name="userEmail" id="Email" data-role="none" value="[userEmail]" style="direction: ltr;" onclick="$(this).css({'background':'none'});" onkeyup="$(this).css({'background':'none'});" />
+						</div>
+						<div class="clear"></div>
+						<button data-role="none" name="submit" onclick="app.saveProf(this,'input');return false;" class="formButton">Save</button>
+						<button data-role="none" name="cancel" id="cancelNick" onclick="app.editProf(this);return false;" class="formButton">Cancel</button>
+					</div>
+					<div class="edit"><div style="float: left;width: 100%;overflow: hidden;text-overflow: ellipsis;">[userEmail]</div>
+						<button data-role="none" style="margin-top:-10px;" onclick="app.editProf(this);return false;" name="edit" class="formButton">Edit</button>
+					</div>
+				</div>
+				<div class="clear"></div>
+				
+				<div class="devider"></div>
+				
+				<div class="sf_txt"><span>City</span></div>
+				<div class="sf_sel_wrap">
+					<div class="save" style="display: none;" >
+						<div style="width: 70%;float: left;">
+							<input type="text" name="userCityName" value="[userCity]" data-role="none" />
+						</div>
+						<div class="clear"></div>
+						<button data-role="none" name="submit" onclick="app.saveProf(this,'input');return false;" class="formButton">Save</button>
+						<button data-role="none" name="cancel" id="cancelNick" onclick="app.editProf(this);return false;" class="formButton">Cancel</button>
+					</div>
+					<div class="edit"><div style="float: left;width: 70%">[userCity]</div><button data-role="none" onclick="app.editProf(this);return false;" name="edit" class="formButton">Edit</button></div>
+				</div>
+				
+				<div class="clear"></div>
+				<div class="devider"></div>
+				
+				<div class="sf_txt"><span>About Me</span></div>
+				<div class="sf_sel_wrap">
+					<div class="save" style="display: none;" >
+						<div style="width: 70%;float: left;">
+							<textarea name="userAboutMe" id="userAboutMe" class="inpi" style="min-height:150px;width:100%;">[userAboutMe]</textarea>
+						</div>
+						<div class="clear"></div>
+						<button data-role="none" name="submit" onclick="app.saveProf(this,'textarea');return false;" class="formButton">Save</button>
+						<button data-role="none" name="cancel" id="cancelNick" onclick="app.editProf(this);return false;" class="formButton">Cancel</button>
+					</div>
+					<div class="edit"><div style="float: left;width: 70%" class="textar">[userAboutMe]</div>
+						<button data-role="none" onclick="app.editProf(this);return false;" name="edit" class="formButton">Edit</button>
+					</div>
+				</div>
+				<div class="clear"></div>
+				
+				<div class="devider"></div>
+				
+				<div class="sf_txt" style="line-height: normal;margin-top:10px;"><span>I'm Looking For</span></div>
+				<div class="sf_sel_wrap">
+					<div class="save" style="display: none;" >
+						<div style="width: 70%;float: left;">
+							<textarea name="userLookingFor" id="userLookingFor" class="inpi" style="min-height:150px;">[userLookingFor]</textarea>
+						</div>
+						<div class="clear"></div>
+						<button data-role="none" name="submit" onclick="app.saveProf(this,'textarea');return false;" class="formButton">Save</button>
+						<button data-role="none" name="cancel" id="cancelNick" onclick="app.editProf(this);return false;" class="formButton">Cancel</button>
+					</div>
+					<div class="edit">
+						<div style="float: left;width: 70%" class="textar">[userLookingFor]</div>
+						<button data-role="none" onclick="app.editProf(this);return false;" name="edit" class="formButton">Edit</button>
+					</div>
+				</div>
+				
+				<div class="clear"></div>
+				
+				<div class="devider"></div>
+				
+				
+				
+				<div class="sf_txt"><span>Birthday</span></div>
+				<div class="clear"></div>
+				
+				
+				<div class="sf_sel_wrap" style="padding-top: 4px; padding-right:0px;height: 43px;width:100%;">
+					<div class="save" style="display: none;" >
+						
+						<div id="userBirth" class="right"></div>
+						<div class="clear"></div>
+						<br /><br />
+						
+						<button data-role="none" name="submit" onclick="app.saveProf(this,'select');return false;" class="formButton">Save</button>
+						<button data-role="none" name="cancel" id="cancelNick" onclick="app.editProf(this);return false;" class="formButton">Cancel</button>
+						
+						
+						<br /><br /><br />
+						
+					</div>
+					<div class="edit">
+						<div style="float: left;width: 70%;direction:ltr;">[j] / [n] / [Y]</div>
+						<button data-role="none" onclick="app.editProf(this);return false;" name="edit" class="formButton">Edit</button>
+					</div>
+				</div>
+			</div>
+			
+			
+			<!-- END Edit Profile Template -->
 	
 	
 	</div>
@@ -1050,6 +1323,73 @@
 			<span class="spinner-text">LOADING</span>
 			<span class="spinner"></span>
 		</div>
+	</div>
+	
+	
+	<!-- Root element of PhotoSwipe. Must have class pswp. -->
+	<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+		
+		<!-- Background of PhotoSwipe.
+		 It's a separate element, as animating opacity is faster than rgba(). -->
+		<div class="pswp__bg"></div>
+		
+		<!-- Slides wrapper with overflow:hidden. -->
+		<div class="pswp__scroll-wrap">
+			
+			<!-- Container that holds slides. PhotoSwipe keeps only 3 slides in DOM to save memory. -->
+			<div class="pswp__container">
+				<!-- don't modify these 3 pswp__item elements, data is added later on -->
+				<div class="pswp__item"></div>
+				<div class="pswp__item"></div>
+				<div class="pswp__item"></div>
+			</div>
+			
+			<!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+			<div class="pswp__ui pswp__ui--hidden">
+				
+				<div class="pswp__top-bar">
+					
+					<!--  Controls are self-explanatory. Order can be changed. -->
+					
+					<div class="pswp__counter"></div>
+					
+					<button class="pswp__button pswp__button--close" title="Close (Esc)" data-role="none"></button>
+					
+					<!--<button class="pswp__button pswp__button--share" title="Share" data-role="none"></button>-->
+					
+					<button class="pswp__button pswp__button--fs" title="Toggle fullscreen" data-role="none"></button>
+					
+					<button class="pswp__button pswp__button--zoom" title="Zoom in/out" data-role="none"></button>
+					
+					<!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+					<!-- element will get class pswp__preloader--active when preloader is running -->
+					<div class="pswp__preloader">
+						<div class="pswp__preloader__icn">
+							<div class="pswp__preloader__cut">
+								<div class="pswp__preloader__donut"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+					<div class="pswp__share-tooltip"></div>
+				</div>
+				
+				<button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)" data-role="none">
+				</button>
+				
+				<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)" data-role="none">
+				</button>
+				
+				<div class="pswp__caption">
+					<div class="pswp__caption__center"></div>
+				</div>
+				
+			</div>
+			
+		</div>
+		
 	</div>
 	
 		
