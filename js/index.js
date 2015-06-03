@@ -65,6 +65,7 @@ var app = {
 	newMessagesCount : 0,
 	contactCurrentReadMessagesNumber : 0,
 	EULA: false,
+	promptRegConfirmation: false,
 	
 	init: function(){
 		
@@ -178,6 +179,10 @@ var app = {
 			//app.printUsers();
 			app.currentPageId = 'login_page';
 			app.currentPageWrapper = $('#'+app.currentPageId);
+			if(app.promptRegConfirmation){
+				app.promptRegConfirmation = false;
+				app.alert("A confirmation mail has been sent to your e-mail. Please confirm your registration so you will be able to log in. If for some reason you don't see this email, please check your spam folder");
+			}
 		}
 		else{
 			$('.appPage').hide();
@@ -1090,7 +1095,7 @@ var app = {
 	},	
 		
 	getRegStep: function(){
-		//$('#test_test_page').show();
+		app.promptRegConfirmation = true;
 		app.showPage('upload_image_page');
 		$('#back').hide();
 		app.container.find('.regInfo').text('Please check your e-mail in order to confirm your registration. You may now upload an image in JPEG format to your profile.'); // Also you may upload an image in your profile now.
