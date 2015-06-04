@@ -1153,13 +1153,13 @@ var app = {
 			return false;
 		}
 		
-		if(app.container.find('#aboutMe').val().length < 20){
-			alert('Invalid About Me (must be at least 20 characters)');
+		if(app.container.find('#aboutMe').val().length < 10){
+			alert('Invalid About Me (must be at least 10 characters)');
 			return false;
 		}
 		
-		if(app.container.find('#lookingFor').val().length < 20){
-			alert('Invalid Looking For (must be at least 20 characters)');
+		if(app.container.find('#lookingFor').val().length < 10){
+			alert('Invalid Looking For (must be at least 10 characters)');
 			return false;
 		}
 		
@@ -1619,8 +1619,9 @@ var app = {
 	},
 	
 	checkNewMessages: function(){
+		//app.currentPageId != 'forgot_password_page' - Added after last binary's update
 		
-		if(app.currentPageId != 'login_page' && app.currentPageId != 'register_page'){
+		if(app.currentPageId != 'login_page' && app.currentPageId != 'register_page' && app.currentPageId != 'forgot_password_page'){
 			checkNewMessagesRequest = $.ajax({
 				url: 'http://m.dating4disabled.com/api/v3/user/newMessagesCount',
 				type: 'Get',
@@ -1632,7 +1633,7 @@ var app = {
 					//alert(app.response.newMessagesCount);
 					if(app.response.newMessagesCount > 0){
 						app.newMessagesCount = app.response.newMessagesCount;
-						if(app.currentPageId != 'login_page' && app.currentPageId != 'main_page' && app.currentPageId != 'register_page'){
+						if(app.currentPageId != 'login_page' && app.currentPageId != 'main_page' && app.currentPageId != 'register_page' && app.currentPageId != 'forgot_password_page'){
 							$('.new_mes_count2').show().html(app.newMessagesCount);
 							//$(".new_mes").show();
 						}
