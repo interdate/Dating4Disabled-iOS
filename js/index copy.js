@@ -104,14 +104,14 @@ var app = {
 				403: function(response, textStatus, xhr){
 					app.stopLoading();
 					app.showPage('login_page');
-					app.alert(response.responseText);
-					//console.log(JSON.stringify(response));
-
+					app.alert('You entered incorrect data, please try again');
 				}
 			},
 			
 			error: function(response, textStatus, errorThrown){
-				app.stopLoading();
+				app.stopLoading();				
+				//alert(response.status + ':' + errorThrown );
+				console.log(textStatus);
 			},
 			
 			complete: function(response, status, jqXHR){
@@ -148,7 +148,7 @@ var app = {
 		}
 		
 		$.ajax({
-			url: 'http://m.dating4disabled.com/api/v6/user/logout',
+			url: 'http://m.dating4disabled.com/api/v5/user/logout',
 			success: function(data, status){
 				//alert(JSON.stringify(data));
 				if(data.logout == 1){					
@@ -238,7 +238,7 @@ var app = {
 		}
 		
 		$.ajax({ 
-			url: 'http://m.dating4disabled.com/api/v6/user/login',
+			url: 'http://m.dating4disabled.com/api/v5/user/login',
 			error: function(response, text){
 				console.log(text);
 			},
@@ -276,7 +276,7 @@ var app = {
 	
 	setBannerDestination: function(){
 		$.ajax({				
-			url: 'http://m.dating4disabled.com/api/v6/user/banner',			
+			url: 'http://m.dating4disabled.com/api/v5/user/banner',			
 			success: function(response, status){
 				app.response = response;
 				//alert(JSON.stringify(app.response));   
@@ -295,7 +295,7 @@ var app = {
 		window.localStorage.setItem("pass",pass);	
 		
 		$.ajax({				
-			url: 'http://m.dating4disabled.com/api/v6/user/login',
+			url: 'http://m.dating4disabled.com/api/v5/user/login',
 			beforeSend: function(xhr){
 				user = window.localStorage.getItem("user");
 				pass = window.localStorage.getItem("pass");				
@@ -342,7 +342,7 @@ var app = {
 		//alert(JSON.stringify(data));
 		//return;
 		$.ajax({
-			url: 'http://m.dating4disabled.com/api/v6/user/location',
+			url: 'http://m.dating4disabled.com/api/v5/user/location',
 			type: 'Post',
 			data:JSON.stringify(data),
 			success: function(response){
@@ -363,7 +363,7 @@ var app = {
 	
 	printUsers: function(){
 		$.ajax({
-			url: 'http://m.dating4disabled.com/api/v6/users/recently_visited/2',
+			url: 'http://m.dating4disabled.com/api/v5/users/recently_visited/2',
 			success: function(data, status){
 				for ( var i = 0; i < data.users.length; i++) {
 					$("#udp_"+i).find(".user_photo_wrap .user_photo").attr("src",data.users[i].mainImage.url);
@@ -396,7 +396,7 @@ var app = {
     persistApnDeviceId: function(){
     	//alert(app.apnDeviceId);
 		$.ajax({
-			url: 'http://m.dating4disabled.com/api/v6/user/deviceId/OS:iOS',
+			url: 'http://m.dating4disabled.com/api/v5/user/deviceId/OS:iOS',
 			type: 'Post',
 			data: JSON.stringify({			
 				deviceId: app.apnDeviceId
@@ -617,8 +617,8 @@ var app = {
 		
 		
 		if(app.action == 'getOnlineNow'){					
-			//app.requestUrl = 'http://m.dating4disabled.com/api/v6/users/online/'+app.itemsPerPage+'/'+app.pageNumber;
-			app.requestUrl = 'http://m.dating4disabled.com/api/v6/users/online/count:'+app.itemsPerPage+'/page:'+app.pageNumber+'/sort:'+app.sort;
+			//app.requestUrl = 'http://m.dating4disabled.com/api/v5/users/online/'+app.itemsPerPage+'/'+app.pageNumber;
+			app.requestUrl = 'http://m.dating4disabled.com/api/v5/users/online/count:'+app.itemsPerPage+'/page:'+app.pageNumber+'/sort:'+app.sort;
 		}	
 		else if(app.action == 'getSearchResults'){
 			var countryCode = $('#countries_list').val();
@@ -631,30 +631,27 @@ var app = {
 			
 			console.log(gender);
 			
-			app.requestUrl = 'http://m.dating4disabled.com/api/v6/users/search/gender:'+gender+'/country:'+countryCode+'/region:'+regionCode+'/age:'+ageFrom+'-'+ageTo+'/disability:'+disabilityId+'/nickName:'+nickName+'/count:'+app.itemsPerPage+'/page:'+app.pageNumber;
+			app.requestUrl = 'http://m.dating4disabled.com/api/v5/users/search/gender:'+gender+'/country:'+countryCode+'/region:'+regionCode+'/age:'+ageFrom+'-'+ageTo+'/disability:'+disabilityId+'/nickName:'+nickName+'/count:'+app.itemsPerPage+'/page:'+app.pageNumber;
 			
 			
-			//app.requestUrl = 'http://m.dating4disabled.com/api/v6/users/search/gender:'+gender+'/country:'+countryCode+'/region:'+regionCode+'/age:'+ageFrom+'-'+ageTo+'/disability:'+disabilityId+'/count:'+app.itemsPerPage+'/page:'+app.pageNumber;
+			//app.requestUrl = 'http://m.dating4disabled.com/api/v5/users/search/gender:'+gender+'/country:'+countryCode+'/region:'+regionCode+'/age:'+ageFrom+'-'+ageTo+'/disability:'+disabilityId+'/count:'+app.itemsPerPage+'/page:'+app.pageNumber;
 			
 			
 		}	
 		else if(app.action == 'getStatResults'){					
-			app.requestUrl = 'http://m.dating4disabled.com/api/v6/user/statistics/'+app.statAction+'/count:'+app.itemsPerPage+'/page:'+app.pageNumber;
+			app.requestUrl = 'http://m.dating4disabled.com/api/v5/user/statistics/'+app.statAction+'/count:'+app.itemsPerPage+'/page:'+app.pageNumber;
 			console.log(app.requestUrl);
 		}
 		
 		//alert(1);
 		
-		console.log(app.requestUrl);
-		
 		getUsersRequest = $.ajax({
 			url: app.requestUrl,
-			timeout:20000,
+			timeout:10000,
 			error:function(response){
 			   console.log(JSON.stringify(response));
 			},
 			success: function(response, status){
-			 console.log(JSON.stringify(response));
 				app.response = response;
 			   $('.loadingHTML').remove();
 				//alert(app.response.error);
@@ -814,7 +811,7 @@ var app = {
 		var userId = window.localStorage.getItem("userId");
 				
 		$.ajax({
-			url: 'http://m.dating4disabled.com/api/v6/user/profile/'+userId,						
+			url: 'http://m.dating4disabled.com/api/v5/user/profile/'+userId,						
 			success: function(user, status, xhr){
 				
 				app.container.find('.txt strong').html(user.nickName+', <span>'+user.age+'</span>');			
@@ -897,7 +894,7 @@ var app = {
 	getDisabilities: function(){
 		
 		$.ajax({
-			url: 'http://m.dating4disabled.com/api/v6/list/health',						
+			url: 'http://m.dating4disabled.com/api/v5/list/health',						
 			success: function(list, status, xhr){							
 				var html = (app.currentPageId == 'register_page') ? '' : '<option value="">All</option>';
 				for(var i in list.items){					  
@@ -916,7 +913,7 @@ var app = {
 	getMobility: function(){
 		
 		$.ajax({
-		   url: 'http://m.dating4disabled.com/api/v6/list/mobility',
+		   url: 'http://m.dating4disabled.com/api/v5/list/mobility',
 		   success: function(list, status, xhr){
 		       var html = (app.currentPageId == 'register_page') ? '' : '<option value="">All</option>';
 		       for(var i in list.items){
@@ -935,7 +932,7 @@ var app = {
 	
 	getSexPreference: function(){
 		$.ajax({			
-			url: 'http://m.dating4disabled.com/api/v6/list/sexPreference',						
+			url: 'http://m.dating4disabled.com/api/v5/list/sexPreference',						
 			success: function(list, status, xhr){							
 				var html = ''; 
 				for(var i in list.items){					  
@@ -954,10 +951,10 @@ var app = {
 		
 	getCountries: function(){
 		$.ajax({
-			url: 'http://m.dating4disabled.com/api/v6/list/countries',						
+			url: 'http://m.dating4disabled.com/api/v5/list/countries',						
 			success: function(list, status, xhr){
 			   
-			   var html = (app.currentPageId == 'register_page') ? '<option value="">Choose</option>' : '';
+				var html = '';
 				for(var i in list.items){					  
 					var item = list.items[i];
 				    if(item.countryCode != '--'){
@@ -983,32 +980,22 @@ var app = {
 	injectCountries: function(html, container){
 		container.html(html);
 		container.trigger('create');
-		
-		if(app.currentPageId == 'register_page'){
-			container.find("option[value='US']").insertAfter(container.find("option:eq(0)"));
-			container.find("option[value='CA']").insertAfter(container.find("option:eq(1)"));
-			container.find("option[value='AU']").insertAfter(container.find("option:eq(2)"));
-			container.find("option[value='GB']").insertAfter(container.find("option:eq(3)"));
-		}
-		else{
-			container.find("option[value='US']").insertBefore(container.find("option:eq(0)"));
-			container.find("option[value='CA']").insertBefore(container.find("option:eq(1)"));
-			container.find("option[value='AU']").insertBefore(container.find("option:eq(2)"));
-			container.find("option[value='GB']").insertBefore(container.find("option:eq(3)"));
-		}
-		
+		container.find("option[value='US']").insertBefore(container.find("option:eq(0)"));
+		container.find("option[value='CA']").insertBefore(container.find("option:eq(1)"));
+		container.find("option[value='AU']").insertBefore(container.find("option:eq(2)"));
+		container.find("option[value='GB']").insertBefore(container.find("option:eq(3)"));
 		container.val(container.find("option:first").val()).selectmenu("refresh");
 	},
 	
 	
 	getRegions: function(countryCode){
 		$.ajax({
-			url: 'http://m.dating4disabled.com/api/v6/list/regions/'+countryCode,						
+			url: 'http://m.dating4disabled.com/api/v5/list/regions/'+countryCode,						
 			success: function(list, status, xhr){							
 				//var html = '<select>';
 			   //alert(JSON.stringify(list));
 			   
-			   var html = '<select name="regionCode" id="regionCode"><option value="">Choose</option>';
+			   var html = '<select name="regionCode">';
 				
 				if(app.currentPageId == 'search_form_page'){
 					html = html + '<option value="">All</option>';
@@ -1047,7 +1034,7 @@ var app = {
 	
 	getCities: function(countryCode,regionCode){
 		$.ajax({
-			url: 'http://m.dating4disabled.com/api/v6/list/cities/'+countryCode+'/'+regionCode,						
+			url: 'http://m.dating4disabled.com/api/v5/list/cities/'+countryCode+'/'+regionCode,						
 			success: function(list, status, xhr){
 				app.container.find("#cities_wrap").hide();				
 				if(list.itemsNumber > 0){
@@ -1084,11 +1071,11 @@ var app = {
 			
 			
 			console.log(data);
-			//return;
+			return;
 			
 			
 			$.ajax({
-				url: 'http://m.dating4disabled.com/api/v6/user',
+				url: 'http://m.dating4disabled.com/api/v5/user',
 				//url: 'http://m.dating4disabled.com/api/insert.asp',
 				type: 'Post',
 				data: data,
@@ -1168,44 +1155,8 @@ var app = {
 			return false;
 		}
 		
-		if (!app.container.find('#userGender').val().length) {
-			app.alert('Invalid Gender');
-			return false;
-		}
-		
-		if (!app.container.find('.sexPreferenceList select').val().length) {
-			app.alert('Invalid Sexual Preference');
-			return false;
-		}
-
-		
 		if($('#d').val().length == 0 || $('#m').val().length == 0 || $('#y').val().length == 0){
 			app.alert('Invalid Date Of Birth');
-			return false;
-		}
-		
-		if (!app.container.find('#countries_list').val().length) {
-			app.alert('Invalid Country');
-			return false;
-		}
-		
-		if (!app.container.find('.regionsList select').val().length) {
-			app.alert('Invalid State');
-			return false;
-		}
-		
-		if(app.container.find('#cityName').val().length < 3){
-			app.alert('Invalid city (must be at least 3 characters)');
-			return false;
-		}
-		
-		if(app.container.find('#zipCode').val().length < 3 || app.container.find('#zipCode').val().length > 5){
-			alert('Invalid Zip Code');
-			return false;
-		}
-
-		if(!app.container.find('#countries_list2').val().length){
-			alert('Invalid Country Of Origin');
 			return false;
 		}
 		
@@ -1219,63 +1170,28 @@ var app = {
 			return false;
 		}
 		
+		if(app.container.find('#zipCode').val().length < 3 || app.container.find('#zipCode').val().length > 5){
+			alert('Invalid Zip Code');
+			return false;
+		}
+		
+		if (!app.container.find('.sexPreferenceList select').val().length) {
+			app.alert('Invalid Sexual Preference');
+			return false;
+		}
+		
 		if (!app.container.find('.maritalStatusList select').val().length) {
 			app.alert('Invalid Marital Status');
 			return false;
 		}
 		
-		if (!app.container.find('.childrenList select').val().length) {
-			app.alert('Invalid Children');
-			return false;
-		}
-		
-		if (!app.container.find('.ethnicityList select').val().length) {
-			app.alert('Invalid Ethnicity');
-			return false;
-		}
-		
-		if (!app.container.find('.religionsList select').val().length) {
-			app.alert('Invalid Religion');
-			return false;
-		}
-		
-		if (!app.container.find('.educationList select').val().length) {
-			app.alert('Invalid Education');
-			return false;
-		}
-		
-		if (!app.container.find('.occupationList select').val().length) {
-			app.alert('Invalid Occupation');
-			return false;
-		}
-		
-		if (!app.container.find('.incomeList select').val().length) {
-			app.alert('Invalid Income');
-			return false;
-		}
-		
-		if(!app.container.find('.languageList input[type="checkbox"]:checked').size()){
-			app.alert('Invalid Language');
-			return false;
-		}
-
-		if (!app.container.find('.smokingList select').val().length) {
-			app.alert('Invalid Smoking');
-			return false;
-		}
-		
-		if (!app.container.find('.drinkingList select').val().length) {
-			app.alert('Invalid Drinking');
+		if (!app.container.find('.heightList select').val().length) {
+			app.alert('Invalid Height');
 			return false;
 		}
 		
 		if (!app.container.find('.bodyTypeList select').val().length) {
 			app.alert('Invalid Body Style');
-			return false;
-		}
-		
-		if (!app.container.find('.heightList select').val().length) {
-			app.alert('Invalid Height');
 			return false;
 		}
 		
@@ -1288,6 +1204,41 @@ var app = {
 			app.alert('Invalid Hair Color');
 			return false;
 		}
+	
+		if (!app.container.find('.smokingList select').val().length) {
+			app.alert('Invalid Smoking');
+			return false;
+		}
+		
+		if (!app.container.find('.occupationList select').val().length) {
+			app.alert('Invalid Occupation');
+			return false;
+		}
+		
+		if (!app.container.find('.educationList select').val().length) {
+			app.alert('Invalid Education');
+			return false;
+		}
+	
+		if (!app.container.find('.religionsList select').val().length) {
+			app.alert('Invalid Religion');
+			return false;
+		}
+		
+		if (!app.container.find('.regionsList select').val().length) {
+			app.alert('Invalid State');
+			return false;
+		}
+		
+		if(!app.container.find('.lookingForList input[type="checkbox"]:checked').size()){
+			app.alert('Invalid Looking For');
+			return false;
+		}
+		
+		if(app.container.find('#cityName').val().length < 3){
+			app.alert('Invalid city (must be at least 3 characters)');
+			return false;
+		}
 		
 		if(app.container.find('#aboutMe').val().length < 10){
 			app.alert('Invalid About Me (must be at least 10 characters)');
@@ -1296,21 +1247,6 @@ var app = {
 		
 		if(app.container.find('#lookingFor').val().length < 10){
 			app.alert('Invalid Looking For (must be at least 10 characters)');
-			return false;
-		}
-		
-		if (!app.container.find('.healthList select').val().length) {
-			app.alert('Invalid Life Challenge');
-			return false;
-		}
-		
-		if (!app.container.find('.mobilityList select').val().length) {
-			app.alert('Invalid Mobility');
-			return false;
-		}
-		
-		if(!app.container.find('.lookingForList input[type="checkbox"]:checked').size()){
-			app.alert('Invalid Looking For');
 			return false;
 		}
 		
@@ -1420,7 +1356,7 @@ var app = {
 		var abuseMessage = $('#abuseMessage').val();
 		
 		$.ajax({
-			url: 'http://m.dating4disabled.com/api/v6/user/abuse/'+app.reportAbuseUserId,
+			url: 'http://m.dating4disabled.com/api/v5/user/abuse/'+app.reportAbuseUserId,
 			type: 'Post',
 			contentType: "application/json; charset=utf-8",
 			data: JSON.stringify({
@@ -1447,7 +1383,7 @@ var app = {
 		}
 		
 		$.ajax({
-			url: 'http://m.dating4disabled.com/api/v6/contactUs',
+			url: 'http://m.dating4disabled.com/api/v5/contactUs',
 			type: 'Post',
 			contentType: "application/json; charset=utf-8",
 			data: JSON.stringify({
@@ -1482,7 +1418,7 @@ var app = {
 		app.reportAbuseUserId = userId;
 		
 		$.ajax({
-			   url: 'http://m.dating4disabled.com/api/v6/user/profile/'+userId,
+			   url: 'http://m.dating4disabled.com/api/v5/user/profile/'+userId,
 			   type: 'Get',
 			   success: function(user, status, xhr){
 			   
@@ -1677,7 +1613,7 @@ var app = {
 		app.startLoading();
 		
 		$.ajax({
-			url: 'http://m.dating4disabled.com/api/v6/user/contacts',									
+			url: 'http://m.dating4disabled.com/api/v5/user/contacts',									
 			success: function(response){
 				app.response = response;
 				app.showPage('messenger_page');
@@ -1717,7 +1653,7 @@ var app = {
 		app.startLoading();
 		
 		$.ajax({
-			url: 'http://m.dating4disabled.com/api/v6/user/chat/'+app.chatWith,									
+			url: 'http://m.dating4disabled.com/api/v5/user/chat/'+app.chatWith,									
 			success: function(response){				
 				app.response = response;
 				//console.log(JSON.stringify(app.response));
@@ -1832,7 +1768,7 @@ var app = {
 		
 		
 		$.ajax({
-		   url: 'http://m.dating4disabled.com/api/v6/user/messenger/setMessagesAsRead',
+		   url: 'http://m.dating4disabled.com/api/v5/user/messenger/setMessagesAsRead',
 		   error: function(response){
 			   console.log(JSON.stringify(response));
 		   },
@@ -1852,10 +1788,10 @@ var app = {
 	useFreePointToReadMessage: function(clickedObj,messageId){
 		app.startLoading();
 		
-		//console.log('http://m.dating4disabled.com/api/v6/user/chat/useFreePointToReadMessage/' + messageId);
+		//console.log('http://m.dating4disabled.com/api/v5/user/chat/useFreePointToReadMessage/' + messageId);
 		
 		$.ajax({
-			url: 'http://m.dating4disabled.com/api/v6/user/chat/useFreePointToReadMessage/' + messageId,
+			url: 'http://m.dating4disabled.com/api/v5/user/chat/useFreePointToReadMessage/' + messageId,
 			   error: function(response){
 			       console.log(JSON.stringify(response));
 			   },
@@ -1882,7 +1818,7 @@ var app = {
 			$('#message').val('');
 			app.startLoading();
 			$.ajax({
-				url: 'http://m.dating4disabled.com/api/v6/user/chat/'+app.chatWith,
+				url: 'http://m.dating4disabled.com/api/v5/user/chat/'+app.chatWith,
 				type: 'Post',
 				contentType: "application/json; charset=utf-8",
 				data: JSON.stringify({			
@@ -1916,7 +1852,7 @@ var app = {
 		
 		if(app.currentPageId == 'chat_page'){		
 			refreshChat = $.ajax({
-				url: 'http://m.dating4disabled.com/api/v6/user/chat/'+app.chatWith+'/'+app.contactCurrentReadMessagesNumber+'/refresh',
+				url: 'http://m.dating4disabled.com/api/v5/user/chat/'+app.chatWith+'/'+app.contactCurrentReadMessagesNumber+'/refresh',
 				type: 'Get',
 				error:function(error){
 					  console.log(JSON.stringify(error));
@@ -1957,7 +1893,7 @@ var app = {
 		
 		if(app.currentPageId != 'login_page' && app.currentPageId != 'register_page' && app.currentPageId != 'forgot_password_page'){
 			checkNewMessagesRequest = $.ajax({
-				url: 'http://m.dating4disabled.com/api/v6/user/newMessagesCount',
+				url: 'http://m.dating4disabled.com/api/v5/user/newMessagesCount',
 				type: 'Get',
 				complete: function(response, status, jqXHR){
 					//don't remove this "complete" function, this is overriding of global "complete".
@@ -2047,13 +1983,13 @@ var app = {
 	},
 	
 	deleteImage: function(){
-		app.requestUrl = 'http://m.dating4disabled.com/api/v6/user/images/delete/' + app.imageId,
+		app.requestUrl = 'http://m.dating4disabled.com/api/v5/user/images/delete/' + app.imageId,
 		app.requestMethod = 'Post';
 		app.getUserImages();
 	},
 	
 	displayUserImages: function(){
-		app.requestUrl = 'http://m.dating4disabled.com/api/v6/user/images';
+		app.requestUrl = 'http://m.dating4disabled.com/api/v5/user/images';
 		app.requestMethod = 'Get';
 		app.getUserImages();
 	},
@@ -2142,7 +2078,7 @@ var app = {
         var ft = new FileTransfer();
         ft.upload(
         	imageURI, 
-        	encodeURI("http://m.dating4disabled.com/api/v6/user/image"), 
+        	encodeURI("http://m.dating4disabled.com/api/v5/user/image"), 
         	app.uploadSuccess, 
         	app.uploadFailure,
 	        options
@@ -2195,7 +2131,7 @@ var app = {
 		app.startLoading();
 		
 		$.ajax({
-			   url: 'http://m.dating4disabled.com/api/v6/user/data',
+			   url: 'http://m.dating4disabled.com/api/v5/user/data',
 			   success: function(response){
 			   user = response.user;
 			   console.log(JSON.stringify(response));
@@ -2294,7 +2230,7 @@ saveProf: function (el,tag){
 	
 	
 	$.ajax({
-		   url:'http://m.dating4disabled.com/api/v6/user/data',
+		   url:'http://m.dating4disabled.com/api/v5/user/data',
 		   //dataType: 'json',
 		   type: 'post',
 		   data: JSON.stringify({name:name,val:val}),
@@ -2455,21 +2391,21 @@ editProf: function (el){
 		
 		
 		$.ajax({
-			url: 'http://m.dating4disabled.com/api/v6/list/' + entity,
+			url: 'http://m.dating4disabled.com/api/v5/list/' + entity,
 			success: function(list, status, xhr){
-			   //console.log(JSON.stringify(list));
+			   console.log(JSON.stringify(list));
 			   var html = '';
 			   if(multiple){
-			       html = '<fieldset data-role="controlgroup" data-type="horizontal" data-mini="true"><div class="ui-controlgroup-controls" style="width: 300px;">';
+			       html = '<fieldset data-role="controlgroup">';
 			       for(var i in list.items){
 					   var item = list.items[i];
 			           console.log(item[entity + 'Id'] + ' | ' + item[entity + 'Name']);
 			   //console.log(list['languageId'] + ' | ' + list['languageName']);
 
 
-			   html = html + '<input name="' + entity + 'Id" type="checkbox" id="check-'+ entity +'-' + item[entity + 'Id']  + '" value="' + item[entity + 'Id']  + '"><label for="check-'+ entity +'-' + item[entity + 'Id']  + '">' + item[entity + 'Name'] + '</label>';
+			   html = html + '<input name="' + entity + 'Id" type="checkbox" id="check-sex' + item[entity + 'Id']  + '" value="' + item[entity + 'Id']  + '"><label for="check-sex' + item[entity + 'Id']  + '">' + item[entity + 'Name'] + '</label>';
 				   }
-			       html = html + '</div></fieldset><br />';
+			       html = html + '</fieldset><br />';
 			   }
 			   else{
 			       html = '<select name="' + entity + 'Id" id="' + entity + 'Id"><option value="">Choose</option>';
@@ -2480,15 +2416,11 @@ editProf: function (el){
 			       html = html + '</select>';
 			   }
 			   
-			   //console.log(html);
-			   //console.log('--------------------------------------------------');
+			   console.log(html);
+			   console.log('--------------------------------------------------');
 			   
 			   app.container.find(entityContainer[entity]).html(html).trigger("create");
-			   //console.log(entity + 'Id');
-			   if(multiple){
-			       app.container.find(entityContainer[entity]).find('.ui-btn').css({"border-radius":"inherit", "margin":"3px 3px"});
-			       //console.log(app.container.find(entityContainer[entity]).html());
-			   }
+			   console.log(entity + 'Id');
 			}
 		});
 	},
@@ -2573,7 +2505,7 @@ editProf: function (el){
 		
 		
 		$.ajax({
-			url: 'http://m.dating4disabled.com/api/v6/user/passwordRecovery',
+			url: 'http://m.dating4disabled.com/api/v5/user/passwordRecovery',
 			type: 'Post',
 			error: function(error){
 			   alert(JSON.stringify(error));
