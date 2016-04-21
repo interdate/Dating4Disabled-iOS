@@ -584,7 +584,7 @@
 					<div class="dots"></div>
 					<div class="chats_wrap">
 						
-						<div class="regTxt lineHeight_50">Text</div><div class="regInput"><textarea name="messageToAdmin" id="messageToAdmin" data-role="none"></textarea></div>
+						<div class="regTxt lineHeight_50">Message</div><div class="regInput"><textarea name="messageToAdmin" id="messageToAdmin" data-role="none"></textarea></div>
 						<div class="clear"></div>
 						<button class="sendMes" data-theme="e" onclick="app.sendMessageToAdmin();">Send</button>
 						
@@ -637,7 +637,7 @@
 		<div id="delete_images_page"  class="appPage">
 			<div data-role="content">
 				<div class="content_wrap">
-					<h1>My Images</h1>
+					<h1>My Photos</h1>
 					<div class="dots"></div>
 					<div class="imagesButtonsWrap">
 						<div class="up_buttons take_a_photo" onclick="app.capturePhoto(app.pictureSource.CAMERA, app.destinationType.FILE_URI);"></div>
@@ -656,7 +656,7 @@
 		<div id="upload_image_page"  class="appPage"> 
 			<div data-role="content">
 				<div class="content_wrap">
-					<h1>Upload Image</h1>
+					<h1>Upload Photos</h1>
 					<div class="dots"></div>
 					<div class="regInfo"></div>					
 					<div class="up_buttons take_a_photo" onclick="app.capturePhoto(app.pictureSource.CAMERA, app.destinationType.FILE_URI);"></div>
@@ -1277,6 +1277,16 @@
 			
 			<!-- START User Profile Buttons Template 2-->
 			<div id="userProfileButtonsTemplate_2">
+                
+                <button onclick="app.addToFavorites([ID])" data-theme="e">Add to Favorites</button>
+                <div class="clear"></div>
+                <br />
+                
+                <button onclick="app.addToBlackList([ID])" data-theme="e">Add to Black List</button>
+                <div class="clear"></div>
+                <br />
+                
+                
 				<button onclick="app.showPage('report_abuse_page')" data-theme="e">Report Abuse!</button>
 				<div class="clear"></div>
 				<br />

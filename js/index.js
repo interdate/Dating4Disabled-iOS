@@ -1747,7 +1747,7 @@ var app = {
 			appendToMessage = '<div style="font-size:16px;">Click here to<span onclick="app.getSubscription();" class="ui-link"> buy subscription </span>';
 			
 			if(app.response.chat.userHasFreePoints){
-				appendToMessage = appendToMessage + '<br><br>or use your <span onclick="app.useFreePointToReadMessage(this,[MESSAGE_ID]);" class="ui-link">free point</span> to read this message';
+				appendToMessage = appendToMessage + '<div class="useFreePoint"><br><br>or use your <span onclick="app.useFreePointToReadMessage(this,[MESSAGE_ID]);" class="ui-link">free point</span> to read this message</div>';
 			}
 			
 			appendToMessage = appendToMessage + '</div>';
@@ -1764,15 +1764,26 @@ var app = {
 				var messageStatusVisibility = 'hidden';
 				var messageStatusImage = '';
 				//message.text = message.text + appendToMessage;
-				if(app.response.chat.abilityReadingMessages == 0){
+                
+                if(app.response.chat.abilityReadingMessages == 0 && message.isRead == 0){
 					message.text = appendToMessage;
 					message.text = message.text.replace("[MESSAGE_ID]", message.id);
 				}
-				else{
-					if(message.isRead == 0){
-						unreadMessages.push(message.id);
-					}
+				else if(message.isRead == 0){
+					unreadMessages.push(message.id);
 				}
+                
+                /*
+                if(message.isRead == 0){
+                    unreadMessages.push(message.id);
+                    console.log(message.text);
+                    if(app.response.chat.abilityReadingMessages == 0){
+                        message.text = appendToMessage;
+                        message.text = message.text.replace("[MESSAGE_ID]", message.id);
+                    }
+                }
+                */
+                
 				
 			}
 			else{
@@ -1860,13 +1871,17 @@ var app = {
 			       console.log(JSON.stringify(response));
 			   },
 			success: function(response){
-			   console.log($(clickedObj).parent().html());
-			   $(clickedObj).parents('.message_cont').html(response.messageText);
-			   app.stopLoading();
+               $(clickedObj).parents('.useFreePoint').parents('.message_cont').html(response.messageText);
+               if(!response.userHasFreePoints){
+                    $('.useFreePoint').hide();
+               }
+               app.stopLoading();
+               
+               app.setMessagesAsRead([messageId]);
+               
 			}
 		});
 	},
-	
 	
 	sendMessage: function(){
 		
@@ -2242,7 +2257,8 @@ saveProf: function (el,tag){
 	var name = '';
 	var val = '';
 	var input = $(el).parent().find(tag);
-	if(input.size()=='3'){
+	
+    if(input.size()=='3'){
 		var er=false;
 		input.each(function(index){
 				   if(index!='0')val=val+'-';
@@ -2259,7 +2275,8 @@ saveProf: function (el,tag){
 		val = input.val();
 	}
 	//alert(name+'='+val);//return false;
-	if(name == 'userPass'){
+	
+    if(name == 'userPass'){
 		if(val.length < 5){
 			app.alert('Password is to short');
 			return false;
@@ -2271,19 +2288,29 @@ saveProf: function (el,tag){
 		}
 		
 	}
-	if((val.length < 3 && tag!='select') || (val.length==0 && tag=='select')){
-		app.alert($(el).parent().parent().prev().find('span').text()+'is to short');
+	
+    if((val.length < 3 && tag!='select' && tag!='textarea') || (val.length==0 && tag=='select' && tag!='textarea')){
+		app.alert($(el).parent().parent().prev().find('span').text()+' is to short');
 		return false;
 	}
-	var email_pattern = new RegExp(/^[+a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i);
-	if (!(email_pattern.test(val))&&name=='userEmail') {
+    
+    if(tag == 'textarea' && val.length < 10){
+        app.alert($(el).parent().parent().prev().find('span').text()+' is to short (must be at least 10 charachters)');
+        return false;
+    }
+    
+	
+    var email_pattern = new RegExp(/^[+a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i);
+	
+    if (!(email_pattern.test(val))&&name=='userEmail') {
 		app.alert("E-mail is incorrect");
 		return false;
 	}
 	
 	if($(el).parent().find('.userFailed').length > 0&&$(el).parent().find('.userFailed').is(":visible"))
 		return false;
-	app.startLoading();
+	
+    app.startLoading();
 	//alert(name+'='+val);
 	
 	
